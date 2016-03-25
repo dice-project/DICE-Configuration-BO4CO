@@ -9,7 +9,6 @@ function X=lhsdesign4grid(n,p,domain,varargin)
 
 global istestfun nMinGridPoints;
 
-
 if p==0
     X=[];
     return
