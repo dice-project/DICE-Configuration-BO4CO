@@ -1,0 +1,4 @@
+*.m~
+*.pdf
+.DS_Store
+*.mat
