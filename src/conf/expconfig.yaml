@@ -7,43 +7,43 @@ runConfigs:
     sleep_time: 60
 var1:
     paramname: "component.spout_num" 
-    options: 1 3
-    lowerbound:
-    upperbound:
+    options: [1 3]
+    lowerbound: 0
+    upperbound: 0
     integer: 0
     categorical: 1
 var2:
     paramname: "topology.max.spout.pending" 
-    options: 1 2 10 100 1000 10000
-    lowerbound:
-    upperbound:
+    options: [1 2 10 100 1000 10000]
+    lowerbound: 0
+    upperbound: 0
     integer: 0
     categorical: 1
 var3:
     paramname: "opology.sleep.spout.wait.strategy.time.ms" 
-    options: 1 2 3 10 100
-    lowerbound: 1
-    upperbound: 2
+    options: [1 2 3 10 100]
+    lowerbound: 0
+    upperbound: 0
     integer: 0
     categorical: 1
 var4:
     paramname: "component.split_bolt_num"   
-    options: 1 2 3 6
-    lowerbound:
-    upperbound:
+    options: [1 2 3 6]
+    lowerbound: 0
+    upperbound: 0
     integer: 0
     categorical: 1
 var5:
     paramname: "component.count_bolt_num"   
-    options: 1 3 6 12
-    lowerbound: 1
-    upperbound: 10
-    integer: 1
-    categorical: 0
+    options: [1 3 6 12]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
 var6:
     paramname: "storm.messaging.netty.min_wait_ms"   
-    options: 10 100 1000
-    lowerbound:
-    upperbound:
+    options: [10 100 1000]
+    lowerbound: 0
+    upperbound: 0
     integer: 0
     categorical: 1
