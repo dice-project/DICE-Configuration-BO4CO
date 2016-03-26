@@ -1,18 +1,27 @@
 function [params, runConfig] = readConfig(yaml_file)
+% Reads the configuration file and extract appropriate infromation
+% about the experiments to run and the parameters and apporpriate options
 
+% Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
+% The code is released under the FreeBSD License.
+% Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
+% Reference: https://github.com/ziyuw/rembo/blob/master/src/utils/readConfig.m
+
+% read configuration file and extract the fields
 configs = ReadYaml(yaml_file);
 names = fieldnames(configs);
 num = length(names);
 
-
+% extract the information about the experiment
 for i=1:num
-    if strcmp(names{i}, 'runConfigs')
+    if strcmp(names{i}, 'runexp')
         runConfig = getfield(configs, names{i});
         names = [names(1:i-1), names(i+1:end)];
         break;
     end
 end
 
+% extract information about parameters
 num = length(names);
 param_bounds = zeros(num, 2);
 param_options = cell(num,1);

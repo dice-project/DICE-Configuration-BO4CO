@@ -1,4 +1,4 @@
-runConfigs:
+runexp:
     noise: 1e-5
     numIter: 100
     saveFolder: ~/reports
