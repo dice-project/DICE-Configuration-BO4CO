@@ -67,7 +67,7 @@ x = observedX; y = observedY;
 
 tic;
 % Bayesian model selection to find hyperparameter
-gps = evidenceOptHyp(gps, x, y);
+gps = optimizeHyp(gps, x, y);
 
 %% Perform GP on the test grid (calculate posterior)
 [ym ys2 m s2] = gp(gps.hyp, @infExact, gps.meanfunc, gps.covfunc, ...
