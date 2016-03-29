@@ -1,10 +1,14 @@
+# information about the experiment
 runexp:
     noise: 1e-5
     numIter: 100
-    saveFolder: ~/reports
+    saveFolder: ./reports
     topologyName: "WordCount"
     conf: ./conf/wordcount.yaml
     sleep_time: 60
+    metricPole: 1000
+    expTime: 300   
+# information about the parameters 
 var1:
     paramname: "component.spout_num" 
     options: [1 3]
