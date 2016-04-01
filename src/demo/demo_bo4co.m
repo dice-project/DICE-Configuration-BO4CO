@@ -5,6 +5,9 @@
 
 %% import m-files
 %import bo4co.*
+close all;
+clear variables;
+clc;
 warning off;
 
 global istestfun;
@@ -30,7 +33,6 @@ d = size(domain, 1); % dimension of the space
 %% create the grid
 %[xTest, xTestDiff, nTest, nTestPerDim] = makeGrid(xRange, nMinGridPoints);
 
-
 %% initialize the prior
 gps = covarianceKernelFactory(12, d);
 
@@ -45,8 +47,7 @@ for exp=1:maxExp
     obsX = lhsdesign4grid(d, nInit, domain);
     %obsX = unirnddesign4grid(d, nInit, domain);
     obsY = zeros(size(obsX, 1), 1);
-    
-    
+        
     for k = 1:size(obsX, 1)
         obsY(k) = f(obsX(k, :));
     end
