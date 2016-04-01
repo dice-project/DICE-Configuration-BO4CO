@@ -39,7 +39,7 @@ function [nextX, gps, xTest, m, s, z, ef, h, et] = boLCB(xRange, observedX, obse
 
 %import bo4co.*
 
-global istestfun;
+global istestfun nMinGridPoints;
 
 %% kappa function
 kappaf=@(s,r,e,t) sqrt(2*log(s*zeta(r)*t.^2/e));
@@ -51,7 +51,7 @@ assert(d == size(observedX, 2));
 assert(N == numel(observedY)); observedY = observedY(:);
 
 %% Parameters of the algorithm
-nMinGridPoints = 1e2;
+%nMinGridPoints = 1e2;
 isSmoothGrid = true;
 kappa=1; %default value
 %% Make the grid for Pmin sampling
