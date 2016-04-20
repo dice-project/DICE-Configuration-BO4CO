@@ -6,7 +6,7 @@ runexp:
     topologyName: "WordCount"
     conf: ./conf/wordcount.yaml
     sleep_time: 60
-    metricPole: 1000
+    metricPoll: 1000
     expTime: 300   
 # information about the parameters 
 var1:
@@ -24,7 +24,7 @@ var2:
     integer: 0
     categorical: 1
 var3:
-    paramname: "opology.sleep.spout.wait.strategy.time.ms" 
+    paramname: "topology.sleep.spout.wait.strategy.time.ms" 
     options: [1 2 3 10 100]
     lowerbound: 0
     upperbound: 0
