@@ -26,5 +26,9 @@ if ~isempty(thiscsv)
     summary=[summary; setting throughput latency];
 end
 
-csvwrite(strcat(dirpath,'summary/',exp_name,'.csv'),summary);
+% writing data to the performance data repository
+if ~isdir('summary')
+    mkdir('summary');
+end
+dlmwrite(strcat(dirpath,'summary/',exp_name,'.csv'),summary,'-append');
 end
