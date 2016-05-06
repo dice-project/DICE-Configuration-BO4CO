@@ -35,5 +35,6 @@ end
 if ~isdir('summary')
     mkdir('summary');
 end
+% we use dlmwrite in order to use -append feature
 dlmwrite(strcat('summary/',exp_name,'.csv'),summary,'-append');
 end
