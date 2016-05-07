@@ -1,4 +1,4 @@
-function [updated_config_name]=update_config(config_name,params_name,setting)
+function [updated_config_name]=update_config(setting)
 % this updates the configuration parameters in the main YAML file
 % setting = [10 12 1], p1=10, p2=12, p3=1
 % params_name={'component.spout_num','topology.max.spout.pending','topology.sleep.spout.wait.strategy.time.ms'}
@@ -6,11 +6,15 @@ function [updated_config_name]=update_config(config_name,params_name,setting)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global topology
+global topology options config_template
+% list of parameters' name
+for i=1:length(options)
+    params_name{i}=options{1,i};
+end
 
 % retrieve the configuration template with (default) values
 dirpath='./config/';
-yaml_file=strcat(dirpath,config_name,'.yaml');
+yaml_file=strcat(dirpath,config_template);
 configs = ReadYaml(yaml_file);
 
 % update the parameters with the setting values
