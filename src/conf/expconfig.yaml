@@ -2,9 +2,10 @@
 runexp:
     noise: 1e-5
     numIter: 100
-    saveFolder: ./reports
+    saveFolder: ./reports/
+    confFolder: ./config/
     topologyName: "WordCount"
-    conf: ./conf/wordcount.yaml
+    conf: wordcount.yaml
     sleep_time: 60
     metricPoll: 1000
     expTime: 300   
