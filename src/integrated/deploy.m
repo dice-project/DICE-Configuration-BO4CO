@@ -1,4 +1,4 @@
-function [status]=deploy(topology_name)
+function [status]=deploy(config_name)
 % deploys a topology (system) with a blueprint provided on the testing cluster
 
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
