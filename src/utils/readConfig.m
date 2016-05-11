@@ -1,4 +1,4 @@
-function [params, runConfig] = readConfig(yaml_file)
+function [params, runConfig, services] = readConfig(yaml_file)
 % Reads the configuration file and extract appropriate infromation
 % about the experiments to run and the parameters and apporpriate options
 
@@ -17,22 +17,33 @@ for i=1:num
     if strcmp(names{i}, 'runexp')
         runConfig = getfield(configs, names{i});
         names = [names(1:i-1), names(i+1:end)];
-        break;
+        break
+    end
+end
+
+    % extract the information about the experiment
+for i=1:num
+    if strcmp(names{i}, 'services')
+        services = getfield(configs, names{i});
+        names = [names(1:i-1), names(i+1:end)];
+        break
     end
 end
 
 % extract information about parameters
-num = length(names);
+vars = getfield(configs, names{1});
+num = length(vars);
 param_bounds = zeros(num, 2);
-param_options = cell(num,1);
+param_options = cell(num,2);
 discrete_indices = zeros(0, 0);
 log_indices = zeros(0, 0);
 categorical_indices = zeros(0, 0);
 for i=1:num
-    field = getfield(configs, names{i});
+    field = vars{i};
     param_bounds(i, 1) = field.lowerbound;
     param_bounds(i, 2) = field.upperbound;
-    param_options(i, 1) = field.options;
+    param_options(i, 1) = cellstr(field.paramname);
+    param_options(i, 2) = field.options;
     
     
     if isfield(field, 'integer') && field.integer

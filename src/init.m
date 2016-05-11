@@ -4,7 +4,7 @@ config % global parameters initialized
 
 % read configuration parameters
 yamlfile='conf/expconfig.yaml';
-[params, runConfig] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
+[params, runConfig, services] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
 
 topology=runConfig.topologyName;
 % init the experiment name with time stamp
