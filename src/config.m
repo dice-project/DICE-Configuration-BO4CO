@@ -4,12 +4,21 @@
 
 global nMinGridPoints istestfun visualize maxIter maxExp exp_name domain;
 
-nMinGridPoints=1e5;
-istestfun=1;
-visualize=0;
-
-maxIter = 110; % number of search iterations
-maxExp = 1; % maximum number of experiment replication
-exp_name= '';
-
-domain=[];
+if ~isdeployed
+    nMinGridPoints=1e5;
+    istestfun=1;
+    visualize=0;
+    
+    maxIter = 110; % number of search iterations
+    maxExp = 1; % maximum number of experiment replication
+    exp_name= '';
+    
+    domain=[];
+else
+    setmcruserdata('nMinGridPoints',1e5);
+    setmcruserdata('istestfun',1);
+    setmcruserdata('visualize',0);
+    setmcruserdata('maxIter',110);
+    setmcruserdata('maxExp',1);
+    setmcruserdata('domain',[]);
+end
