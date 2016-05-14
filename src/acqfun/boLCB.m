@@ -37,10 +37,15 @@ function [nextX, gps, xTest, m, s, z, ef, h, et] = boLCB(xRange, observedX, obse
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-%import bo4co.*
-
 global istestfun nMinGridPoints;
 
+if ~isdeployed
+    istestfun_=istestfun;
+    nMinGridPoints_=nMinGridPoints;
+else
+    istestfun_=getmcruserdata('istestfun');
+    nMinGridPoints_=getmcruserdata('nMinGridPoints');
+end
 %% kappa function
 kappaf=@(s,r,e,t) sqrt(2*log(s*zeta(r)*t.^2/e));
 
@@ -55,8 +60,8 @@ assert(N == numel(observedY)); observedY = observedY(:);
 isSmoothGrid = true;
 kappa=1; %default value
 %% Make the grid for Pmin sampling
-if istestfun
-    [xTest, xTestDiff, nTest, nTestPerDim] = makeGrid(xRange, nMinGridPoints);
+if istestfun_
+    [xTest, xTestDiff, nTest, nTestPerDim] = makeGrid(xRange, nMinGridPoints_);
 else
     [xTest, xTestDiff, nTest, nTestPerDim] = makeDGrid(xRange);
 end
@@ -70,7 +75,7 @@ tic;
 gps = optimizeHyp(gps, x, y);
 
 %% Perform GP on the test grid (calculate posterior)
-[ym ys2 m s2] = gp(gps.hyp, @infExact, gps.meanfunc, gps.covfunc, ...
+[ym, ys2, m, s2] = gp(gps.hyp, @infExact, gps.meanfunc, gps.covfunc, ...
     gps.likfunc, x, y, xTest);
 s = sqrt(s2);
 

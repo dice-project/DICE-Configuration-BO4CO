@@ -1,5 +1,5 @@
 function init()
-global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service
+global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time
 config % global parameters initialized
 
 % read configuration parameters
@@ -14,7 +14,12 @@ if ~isdeployed
     config_template=runConfig.conf;
     config_folder=runConfig.confFolder;
     save_folder=runConfig.saveFolder;
-    
+    exp_budget=runConfig.numIter;
+    initial_design=runConfig.initialDesign;
+    polling_time=runConfig.metricPoll;
+    exp_time=runConfig.expTime;
+    sleep_time=runConfig.sleep_time;
+
     options=params.param_options;
     domain=options2domain(options);
     
@@ -28,6 +33,11 @@ else
     setmcruserdata('config_template',runConfig.conf);
     setmcruserdata('config_folder',runConfig.confFolder);
     setmcruserdata('save_folder',runConfig.saveFolder);
+    setmcruserdata('exp_budget',runConfig.numIter);
+    setmcruserdata('initial_design',runConfig.initialDesign);
+    setmcruserdata('polling_time',runConfig.metricPoll);
+    setmcruserdata('exp_time',runConfig.expTime);
+    setmcruserdata('sleep_time',runConfig.sleep_time);
 
     setmcruserdata('options',params.param_options);
     setmcruserdata('domain',options2domain(options));
