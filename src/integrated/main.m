@@ -59,12 +59,5 @@ for exp=1:maxExp
     % saving the replication data
     expData=[expData obsX obsY];
 end
-%% report what has been found
-[mv, mloc] = min(obsY);
-optimum_options=obsX(mloc, :);
-for i=1:length(optimum_options)
-    optimum_configuration{i,1}=options{1,i};
-    optimum_configuration{i,2}=optimum_options(1,i);
-end
-result_file=strcat(save_folder,exp_name,'_config.yaml');
-WriteYaml(result_file,optimum_configuration);
+%% update the config with what has been found
+get_config();

@@ -25,9 +25,7 @@ pause(exp_time/60); % convert to seconds and wait for the experiment to finish a
 undeploy(system_name);
 pause(sleep_time/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
 
-summarize_expdata(exp_name,setting);
+summarize_expdata(exp_name,setting); % this also update a csv file
 [latency,throughput]=retrieve_data(exp_name);
-
-% dump the data to a csv file
 
 end
