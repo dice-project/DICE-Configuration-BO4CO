@@ -1,6 +1,6 @@
-function summarize_expdata(exp_name,setting)
+function [status]=summarize_expdata(exp_name,setting)
 % this calculates the mean throughput and latency for the experiment run with a specific
-% configuration.
+% configuration. status==0 successful, 1 unsuccessful
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
@@ -35,6 +35,12 @@ end
 if ~isdir('summary')
     mkdir('summary');
 end
-% we use dlmwrite in order to use -append feature
-dlmwrite(strcat('summary/',exp_name,'.csv'),summary,'-append');
+
+if ~isempty(summary)
+    % we use dlmwrite in order to use -append feature
+    dlmwrite(strcat('summary/',exp_name,'.csv'),summary,'-append');
+    status=0;
+else
+    status=1;
+end
 end

@@ -7,6 +7,7 @@ function [latency,throughput]=f(x)
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
+
 exp_name=getmcruserdata('exp_name');
 system_name=getmcruserdata('topology');
 
@@ -26,5 +27,7 @@ pause(sleep_time/60); % convert to seconds and wait for the experiment to finish
 
 summarize_expdata(exp_name,setting);
 [latency,throughput]=retrieve_data(exp_name);
+
+% dump the data to a csv file
 
 end
