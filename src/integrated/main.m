@@ -32,7 +32,7 @@ gps = covarianceKernelFactory(12, d);
 maxIter=maxIter-nInit;
 % this loop is only for replicating optimization loop to get a mean and CI for each optimization criteria
 for exp=1:maxExp
-    fprintf('experiment number %d is running now!!!',exp);
+    
     %obsX = lhsdesign(d, nInit)';
     obsX = lhsdesign4grid(d, nInit, domain);
     %obsX = unirnddesign4grid(d, nInit, domain);
@@ -44,6 +44,18 @@ for exp=1:maxExp
     
     %% Bayesian optimization loop (for locating minimizer)
     for k = 1:maxIter
+        % every 10 sec check whether to stop or pause or continue running
+        while 1
+            switch getmcruserdata('mode')
+                case 'running'
+                    break
+                case 'pause'
+                    continue
+                case 'stop'
+                    exit
+            end            
+            pause(10);
+        end
         % criterial to evaluate in order to find where to sample next
         [nextX, dummy1, xTest, m, s, z, ef,h,et] = boLCB(domain, obsX, obsY, gps);
         

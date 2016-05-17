@@ -14,6 +14,8 @@ if ~isdeployed
     exp_name= '';
     
     domain=[];
+    
+    mode='running';
 else
     setmcruserdata('nMinGridPoints',1e5);
     setmcruserdata('istestfun',1);
@@ -21,4 +23,6 @@ else
     setmcruserdata('maxIter',110);
     setmcruserdata('maxExp',1);
     setmcruserdata('domain',[]);
+    setmcruserdata('mode','running');
+    
 end
