@@ -14,9 +14,9 @@ options = weboptions('RequestMethod','get');
 data = webread(url,options);
 if ~isempty(data)
     polling_interval=data;
-    status=0;
+    status=200; % OK
 else
     polling_interval=[];
-    status=1;
+    status=400; % Not OK
 end
 end

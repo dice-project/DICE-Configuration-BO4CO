@@ -17,6 +17,10 @@ options = weboptions('RequestMethod','post','MediaType','application/json');
 
 data = struct('Spark',num2str(polling_interval),'Storm',num2str(polling_interval),'System',num2str(polling_interval),'YARN',num2str(polling_interval));
 
-status = webwrite(url,data,options);
+%status = webwrite(url,data,options); % I realized webwrite and webread
+%does not support PUT and DELETE so I used undocumented urlread2
+header = http_createHeader('Content-Type','application/json');
+[status,extras]=urlread2(url,'PUT',mls.internal.toJSON(data),header);
+status=extras.status.value;
 
 end
