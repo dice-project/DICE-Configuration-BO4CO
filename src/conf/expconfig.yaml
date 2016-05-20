@@ -2,18 +2,20 @@
 runexp:
   noise: 1e-5
   numIter: 100
+  initialDesign: 10
   saveFolder: ./reports/
   confFolder: ./config/
   topologyName: "WordCount"
   conf: "wordcount.yaml"
-  sleep_time: 60
+  sleep_time: 10000
   metricPoll: 1000
-  expTime: 300
+  expTime: 60000
 # the url of the services confioguration optimization is depend on or use
 services:
   deploymentServiceURL: "localhost:4984"
   continuousIntegrationURL: "localhost:4985"
-  monitoringURL: "localhost:4986"
+  monitoringURL: "http://109.231.121.139:5001"
+  stormUIURL: "http://109.231.121.245:8080"
 # information about the parameters
 vars:
   - paramname: "component.spout_num"  
