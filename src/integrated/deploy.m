@@ -1,4 +1,4 @@
-function [status]=deploy(config_name)
+function [deployment_id,status]=deploy(config_name)
 % deploys a topology (system) with a blueprint provided on the testing cluster
 
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
@@ -26,5 +26,6 @@ options = weboptions('MediaType','application/json');
 
 % call the restfull api and return the status
 status = webwrite(service_url,data,options);
+
 
 end

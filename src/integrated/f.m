@@ -9,23 +9,24 @@ function [latency,throughput]=f(x)
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
 exp_name=getmcruserdata('exp_name');
-system_name=getmcruserdata('topology');
-
 options_=getmcruserdata('options');
-exp_time=getmcruserdata('exp_time');
 sleep_time=getmcruserdata('sleep_time');
 
 setting=domain2option(options_,x);
 
 % deploy the application under a specific setting
 [updated_config_name]=update_config(setting);
-deploy(updated_config_name);
+deployment_id=deploy(updated_config_name);
 
-pause(exp_time/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
-undeploy(system_name);
-pause(sleep_time/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
-
-summarize_expdata(exp_name,setting); % this also update a csv file
-[latency,throughput]=retrieve_data(exp_name);
+if is_deployed(deployment_id)
+    [expdata_csv_name]=update_expdata(deployment_id);
+    undeploy(deployment_id);
+    pause(sleep_time/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
+    summarize_expdata(expdata_csv_name,setting); % this also update a csv file
+    [latency,throughput]=retrieve_data(exp_name);
+else % -1 means there was some problem...
+    latency=-1;
+    throughput=-1;
+end
 
 end

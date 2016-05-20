@@ -1,44 +1,50 @@
-function [status]=summarize_expdata(exp_name,setting)
+function [status]=summarize_expdata(expdata_csv_name,setting)
 % this calculates the mean throughput and latency for the experiment run with a specific
 % configuration. status==0 successful, 1 unsuccessful
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
+
+global  exp_name save_folder summary_folder
+if ~isdeployed
+    exp_name_=exp_name;
+    save_folder_=save_folder;
+    summary_folder_=summary_folder;
+    
+else
+    exp_name_ = getmcruserdata('exp_name');
+    save_folder_=getmcruserdata('save_folder');
+    summary_folder_=getmcruserdata('summary_folder');
+end
+
 % this is to cut the unstable monitoring data in the first 2-3 minutes
 firstrow=120;
-dirpath='./reports/';
 % throughput and latency measurements are located in col 11,12
-throughput_col_index=11;%11
-latency_column_index=12;%12
+throughput_col_index=2;%11
+latency_column_index=1;%12
 
-% retreive the latest csv file in the folder
-list=dir(fullfile(dirpath,'*.csv'));
-list=list(~[list.isdir]);
-name={list.name};
-[dummy, index] = sort(name);
-name = name(index); % sorted numerically now
 summary=[];
 
-filename=strcat(dirpath, name{1});
+filename=[save_folder_ expdata_csv_name];
 lastrow=number_of_rows(filename);
-thiscsv=csvread(filename,firstrow,throughput_col_index,[firstrow,throughput_col_index,lastrow-1,latency_column_index]);
+thiscsv=csvread(filename,firstrow,latency_column_index,[firstrow,latency_column_index,lastrow-1,throughput_col_index]);
 
 % if instead of mean percentile required replace it with prctile(X,p)
 if ~isempty(thiscsv)
-    throughput=mean(nonzeros(thiscsv(:,1)));
-    latency=mean(nonzeros(thiscsv(:,2)));
+    latency=mean(nonzeros(thiscsv(:,1)));
+    throughput=mean(nonzeros(thiscsv(:,2)));
     summary=[summary; setting throughput latency];
 end
 
 % writing data to the performance data repository
-if ~isdir('summary')
-    mkdir('summary');
+if ~isdir(summary_folder_)
+    mkdir(summary_folder_);
 end
 
 if ~isempty(summary)
     % we use dlmwrite in order to use -append feature
-    dlmwrite(strcat('summary/',exp_name,'.csv'),summary,'-append');
+    dlmwrite(strcat(summary_folder_,exp_name_,'.csv'),summary,'-append');
     status=0;
 else
     status=1;
