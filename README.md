@@ -1,4 +1,4 @@
-# README [![License](https://img.shields.io/pypi/l/Django.svg)](https://github.com/pooyanjamshidi/DICE-Configuration-BO4CO/blob/master/LICENSE.txt)
+# README [![License](https://img.shields.io/pypi/l/Django.svg)](https://github.com/dice-project/DICE-Configuration-BO4CO/blob/master/LICENSE.txt)
 
 ## BO4CO (is now available with demo)
 Configuration Optimization Tool for Big Data Systems
