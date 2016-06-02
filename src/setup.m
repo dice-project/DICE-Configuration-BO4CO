@@ -34,7 +34,7 @@ end
 addpath(pathsToAdd);
 
 % setup the GPML package, GPML is a dependency for BO4CO
-run([strcat(myDir,filesep), 'libs/', 'gpml-matlab-v3.6-2015-07-07/', 'startup'])
+run([strcat(myDir,filesep), 'external/libs/', 'gpml-matlab-v3.6-2015-07-07/', 'startup'])
 
 % if you want to not run this when you exit matlab uncomment this, use
 % this: which pathdef.m -all
