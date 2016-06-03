@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CO
-Bundle-SymbolicName: uk.imp.co.ui;singleton:=true
+Bundle-SymbolicName: uk.ic.co.ui;singleton:=true
 Bundle-Version: 0.0.1.0
 Require-Bundle: org.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

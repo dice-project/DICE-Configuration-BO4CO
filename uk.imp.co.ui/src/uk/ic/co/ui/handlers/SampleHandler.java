@@ -1,4 +1,4 @@
-package uk.imp.co.ui.handlers;
+package uk.ic.co.ui.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -29,6 +29,7 @@ public class SampleHandler extends AbstractHandler {
 				window.getShell(),
 				"CO",
 				"This is the first version of the DICE CO Tool!");
+		
 		return null;
 	}
 }
