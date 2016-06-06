@@ -8,6 +8,7 @@ runexp:
   summaryFolder: ./summary/
   topologyName: "WordCount"
   conf: "wordcount.yaml"
+  topic: "jsontest" # kafka configurations, this topic is used for pushing testing tuples into
   sleep_time: 10000
   metricPoll: 1000
   expTime: 60000
@@ -17,7 +18,10 @@ services:
   continuousIntegrationURL: "localhost:4985"
   monitoringURL: "http://109.231.121.139:5001"
   stormUIURL: "http://localhost:8080"
-# information about the parameters
+  brokerURL: "http://localhost:8082" # kafka
+  zookeeper.servers: "localhost:2181"
+# information about the parameters, note that for each parameter the specific technology
+# , e.g., storm, is also specified via "node"
 vars:
   - paramname: "component.spout_num" 
     node: ["storm", "storm_nimbus"] 
@@ -57,6 +61,27 @@ vars:
   - paramname: "storm.messaging.netty.min_wait_ms"  
     node: ["storm", "storm_nimbus"] 
     options: [10 100 1000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "tickTime"
+    node: "zookeeper"
+    options: [2000 3000 4000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "initLimit"
+    node: "zookeeper"
+    options: [5 10 15]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "syncLimit"
+    node: zookeeper
+    options: [2 3 4]
     lowerbound: 0
     upperbound: 0
     integer: 0
