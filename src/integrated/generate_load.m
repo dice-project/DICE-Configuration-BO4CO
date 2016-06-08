@@ -6,6 +6,7 @@ function [number_of_message_pushed]=generate_load(type, time_period)
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
+init();
 
 global kafka topic
 if ~isdeployed
