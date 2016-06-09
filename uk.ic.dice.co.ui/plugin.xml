@@ -59,5 +59,48 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            id="uk.ic.dice.co.ui.launchConfigurationType"
+            name="CO launch">
+      </launchConfigurationType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="uk.ic.dice.co.ui.launchConfigurationTypeImage1"
+            icon="icons/co-icon.png"
+            id="uk.ic.dice.co.ui.launchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="uk.ic.dice.co.ui.AbstractLaunchConfigurationTabGroup"
+            description="Launches a configuration tuning"
+            id="uk.ic.dice.co.ui.launchConfigurationTabGroup"
+            type="es.unizar.disco.simulation.ui.launchConfigurationType">
+      </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabs">
+      <tab
+            class="uk.ic.dice.co.ui.MainLaunchConfigurationTab"
+            group="es.unizar.disco.simulation.ui.launchConfigurationTabGroup"
+            id="uk.ic.dice.co.ui.mainTab"
+            name="Main">
+      </tab>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="uk.ic.dice.co.ui.launcher.ConfigurationLaunchShortcut"
+            icon="icons/co-icon.png"
+            id="uk.ic.dice.co.ui.shortcut"
+            label="Configuration Optimization"
+            modes="run">
+      </shortcut>
+   </extension>
 
 </plugin>
