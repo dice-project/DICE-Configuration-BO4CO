@@ -6,6 +6,7 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "uk.ic.dice.co.ui.launcher.messages"; //$NON-NLS-1$
 	public static String MainLaunchConfigTab_browseLabel;
 	public static String MainLaunchConfigTab_configurationLabel;
+	public static String MainLaunchConfigTab_executionModeLabel;
 
 	static {
 		// initialize resource bundle

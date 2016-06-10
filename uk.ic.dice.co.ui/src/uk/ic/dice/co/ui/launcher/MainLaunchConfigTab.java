@@ -19,18 +19,33 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
+
+
 import org.eclipse.swt.widgets.FileDialog;
 
 public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 
+	private enum mode {RUN,STOP,PAUSE,RESUME};
 	private class FormData{
 		private String configurationFile;
+		private mode execMode;
 
+		protected mode getExecutionMode(){
+			return execMode;
+		}
 
+		protected void setExecutionMode(mode executionMode){
+			this.execMode=executionMode;
+			viewer.refresh();
+			setDirty(true);
+			updateLaunchConfigurationDialog();
+
+		}
 		protected String getConfigurationFile() {
 			return configurationFile;
 		}
@@ -77,13 +92,55 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					FileDialog fd= new FileDialog(getShell());
-					fd.setText("Select");
-					String[] filterExt = {"*.yaml","*.*"};
+					fd.setText("Select"); //$NON-NLS-1$
+					String[] filterExt = {"*.yaml","*.*"}; //$NON-NLS-1$ //$NON-NLS-2$
 					fd.setFilterExtensions(filterExt);
 					String selected = fd.open();
 					data.setConfigurationFile(selected); 
 				}
 			});
+		}
+
+		{ // Execution mode Group
+			Group group = new Group(topComposite, SWT.NONE);
+			group.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+
+			group.setLayout(new RowLayout(SWT.VERTICAL));
+			group.setText(uk.ic.dice.co.ui.launcher.Messages.MainLaunchConfigTab_executionModeLabel);
+
+			Button runButton = new Button(group, SWT.RADIO);
+			runButton.setText("Run CO Tool");
+			runButton.setSelection(true);			
+			runButton.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					data.setExecutionMode(mode.RUN);
+				};
+			});
+			
+			Button stopButton = new Button(group, SWT.RADIO);
+			stopButton.setText("Stop CO Tool");			
+			stopButton.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					data.setExecutionMode(mode.STOP);
+				};
+			});
+			
+			Button pauseButton = new Button(group, SWT.RADIO);
+			pauseButton.setText("Pause CO Tool");			
+			pauseButton.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					data.setExecutionMode(mode.PAUSE);
+				};
+			});
+			
+			Button resumeButton = new Button(group, SWT.RADIO);
+			resumeButton.setText("Resume CO Tool");			
+			resumeButton.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					data.setExecutionMode(mode.RESUME);
+				};
+			});
+
 		}
 
 		setControl(topComposite);
