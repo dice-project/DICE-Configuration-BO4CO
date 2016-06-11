@@ -7,6 +7,7 @@ public class Messages extends NLS {
 	public static String MainLaunchConfigTab_browseLabel;
 	public static String MainLaunchConfigTab_configurationLabel;
 	public static String MainLaunchConfigTab_executionModeLabel;
+	public static String MainLaunchConfigTab_mainTabTitle;
 
 	static {
 		// initialize resource bundle

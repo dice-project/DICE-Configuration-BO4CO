@@ -2,8 +2,10 @@ package uk.ic.dice.co.ui.launcher;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.InetAddressValidator;
 import org.eclipse.core.databinding.Binding;
@@ -18,6 +20,7 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -43,20 +46,22 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
 
+import uk.ic.dice.co.launcher.COLaunchConfigurationDelegate;
+
 import org.eclipse.swt.widgets.FileDialog;
 
 public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 
-	private enum mode {RUN,STOP,PAUSE,RESUME};
+	private enum Mode {RUN,STOP,PAUSE,RESUME};
 	private class FormData{
 		private String configurationFile;
-		private mode execMode;
+		private Mode execMode;
 
-		protected mode getExecutionMode(){
+		protected Mode getExecutionMode(){
 			return execMode;
 		}
 
-		protected void setExecutionMode(mode executionMode){
+		protected void setExecutionMode(Mode executionMode){
 			this.execMode=executionMode;
 			viewer.refresh();
 			setDirty(true);
@@ -80,7 +85,7 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 	protected TableViewer viewer;
 	protected TableViewerColumn varViewerColumn;
 	protected TableViewerColumn valueViewerColumn;
-	
+
 	private IObservableMap preferencesMap = new WritableMap();
 	private DataBindingContext context;
 
@@ -91,11 +96,11 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 					DomainValidator.getInstance(true).isValid(value.toString())) {
 				return ValidationStatus.ok();
 			}
-			return ValidationStatus.error("Invalid host name or IP address");
+			return ValidationStatus.error("Invalid host name or IP address"); //$NON-NLS-1$
 		}
 	}
 
-	
+
 	@Override
 	public void createControl(Composite parent) {		
 		Composite topComposite = new Composite(parent, SWT.NONE);
@@ -103,7 +108,7 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 
 		GridData buttonsGridData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 		buttonsGridData.widthHint = 100;
-		
+
 		GridData labelGridData = new GridData(SWT.FILL, SWT.TOP, false, false);
 		labelGridData.widthHint = 100;
 
@@ -140,46 +145,46 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 			group.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
 			group.setLayout(new RowLayout(SWT.VERTICAL));
-			group.setText(uk.ic.dice.co.ui.launcher.Messages.MainLaunchConfigTab_executionModeLabel);
+			group.setText(Messages.MainLaunchConfigTab_executionModeLabel);
 
 			Button runButton = new Button(group, SWT.RADIO);
-			runButton.setText("Run CO Tool");
+			runButton.setText("Run CO Tool"); //$NON-NLS-1$
 			runButton.setSelection(true);			
 			runButton.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					data.setExecutionMode(mode.RUN);
+					data.setExecutionMode(Mode.RUN);
 				};
 			});
-			
+
 			Button stopButton = new Button(group, SWT.RADIO);
-			stopButton.setText("Stop CO Tool");			
+			stopButton.setText("Stop CO Tool");			 //$NON-NLS-1$
 			stopButton.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					data.setExecutionMode(mode.STOP);
+					data.setExecutionMode(Mode.STOP);
 				};
 			});
-			
+
 			Button pauseButton = new Button(group, SWT.RADIO);
-			pauseButton.setText("Pause CO Tool");			
+			pauseButton.setText("Pause CO Tool");			 //$NON-NLS-1$
 			pauseButton.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					data.setExecutionMode(mode.PAUSE);
+					data.setExecutionMode(Mode.PAUSE);
 				};
 			});
-			
+
 			Button resumeButton = new Button(group, SWT.RADIO);
-			resumeButton.setText("Resume CO Tool");			
+			resumeButton.setText("Resume CO Tool");			 //$NON-NLS-1$
 			resumeButton.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					data.setExecutionMode(mode.RESUME);
+					data.setExecutionMode(Mode.RESUME);
 				};
 			});
 
 		}
-		
-		
+
+		/*	
 		{ // Test platform address
-			
+
 			final Group serverGroup = new Group(topComposite, SWT.NONE);
 			serverGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 			serverGroup.setText("Testing server");
@@ -200,7 +205,7 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 			portSpinner.setMinimum(0);
 			portSpinner.setMaximum(0xFFFF);
 			portSpinner.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
-			
+
 			// Data binding
 			//
 			// Observables for the Widgets
@@ -220,8 +225,9 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 			context.bindValue(portSpinnerObservable, portObservable, 
 					null,
 					new UpdateValueStrategy().setConverter(StringToNumberConverter.toInteger(true)));
-			
-		}
+
+		} 
+		 */
 
 		setControl(topComposite);
 
@@ -229,26 +235,55 @@ public class MainLaunchConfigTab extends AbstractLaunchConfigurationTab {
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-
+		configuration.removeAttribute(COLaunchConfigurationDelegate.INPUT_FILE);
+		configuration.removeAttribute(COLaunchConfigurationDelegate.EXECUTION_MODE);
 	}
 
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
-		// TODO Auto-generated method stub
 
+		try {
+			if (configuration.hasAttribute(COLaunchConfigurationDelegate.INPUT_FILE)) {
+				data.setConfigurationFile(configuration.getAttribute(COLaunchConfigurationDelegate.INPUT_FILE, StringUtils.EMPTY));
+			}
+
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-
+		configuration.setAttribute(COLaunchConfigurationDelegate.INPUT_FILE, data.getConfigurationFile());
+		configuration.setAttribute(COLaunchConfigurationDelegate.EXECUTION_MODE, data.getExecutionMode().toString());
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return Messages.MainLaunchConfigTab_mainTabTitle;
+	}
+
+	@Override
+	public boolean isValid(ILaunchConfiguration configuration){
+		try {
+			if (!configuration.hasAttribute(COLaunchConfigurationDelegate.INPUT_FILE)) {
+				setErrorMessage("No input configuration file defined");
+				return false;
+			}
+			// Check input file exists
+			File inputFile = new File(URI.create(configuration.getAttribute(COLaunchConfigurationDelegate.INPUT_FILE, StringUtils.EMPTY)));
+			if (!inputFile.isFile()) {
+				// Should not happen...
+				setErrorMessage("Input file does not exist");
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		setErrorMessage(null);
+		return true;
 	}
 
 }
