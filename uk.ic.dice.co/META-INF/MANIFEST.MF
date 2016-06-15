@@ -10,3 +10,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ic.dice.co.launcher
+Import-Package: org.apache.commons.lang3
