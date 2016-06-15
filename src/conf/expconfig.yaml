@@ -14,12 +14,20 @@ runexp:
   expTime: 60000
 # the url of the services confioguration optimization is depend on or use
 services:
-  deploymentServiceURL: "localhost:4984"
-  continuousIntegrationURL: "localhost:4985"
-  monitoringURL: "http://109.231.121.139:5001"
-  stormUIURL: "http://localhost:8080"
-  brokerURL: "http://localhost:8082" # kafka
-  zookeeper.servers: "localhost:2181"
+  - servicename: "deployment.service"
+    URL: "http://109.231.122.58:8000"
+    username: "pooyan"
+    password: "co#pyn066"
+  - servicename: "continuousintegration.service"
+    URL: "localhost:4985"
+  - servicename: "monitoring.service"
+    URL: "http://109.231.121.139:5001"
+  - servicename: "storm_ui"
+    URL: "http://localhost:8080"     
+  - servicename: "broker"
+    URL: "http://localhost:8082" # kafka  
+  - servicename: "zookeeper.servers"
+    URL: "localhost:2181" # kafka 
 # information about the parameters, note that for each parameter the specific technology
 # , e.g., storm, is also specified via "node"
 vars:
