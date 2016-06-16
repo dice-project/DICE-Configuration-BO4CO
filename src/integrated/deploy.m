@@ -1,4 +1,4 @@
-function [deployment_id,status]=deploy(config_name)
+function [deployment_id,blueprint_id,status]=deploy(config_name)
 % deploys a topology (system) with a blueprint provided on the testing cluster
 % I got the inspiration for this from http://www.mathworks.com/matlabcentral/fileexchange/27189-urlreadpost-url-post-method-with-binary-file-uploading/content/urlreadpost.m
 
@@ -6,21 +6,19 @@ function [deployment_id,status]=deploy(config_name)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global config_folder deployment_service
+global config_folder deployment_service storm
 
 % this make the code mcr compatible for global vars
 if ~isdeployed
     dirpath=config_folder;
     deployment_service_=deployment_service;
-    
 else
     dirpath=getmcruserdata('config_folder');
     deployment_service_=getmcruserdata('deployment_service');
 end
 % retrieve the yaml file
-%yaml_file=strcat(dirpath,config_name);
+yaml_file=strcat(dirpath,config_name);
 %configs = ReadYaml(yaml_file);
-
 fileID = fopen(yaml_file,'r');
 content = fscanf(fileID,'%c');
 
@@ -36,5 +34,30 @@ data=[data eol content eol];
 data=[data '--' boundary '--' eol];
 
 % call the restfull api and return the status
-status = webwrite(service_url,data,options);
+response = webwrite(service_url,data,options);
+
+blueprint_id=response.blueprint.id;
+
+% wait until the deployment service deploys the system
+service_url = [deployment_service_.URL '/blueprints/' blueprint_id];
+options = weboptions('KeyName','Authorization','KeyValue',['Token ',get_token()]);
+response = webread(service_url,options);
+status=response.state_name;
+while ~strcmp(status,'deployed')
+    pause(60);
+    response = webread(service_url,options);
+    status=response.state_name;
+    if strcmp(status,'error')
+        deployment_id='';
+        return
+    end
+end
+deployment_id=response.outputs.wordcount_id.value;
+% set the ip address of storm UI
+if ~isdeployed
+    storm = response.outputs.storm_nimbus_address.value;
+else
+    setmcruserdata('storm',response.outputs.storm_nimbus_address.value);
+end
+
 end

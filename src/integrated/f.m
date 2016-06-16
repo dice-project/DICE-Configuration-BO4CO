@@ -16,11 +16,14 @@ setting=domain2option(options_,x);
 
 % deploy the application under a specific setting
 [updated_config_name]=update_config(setting);
-deployment_id=deploy(updated_config_name);
+[deployment_id,blueprint_id,status]=deploy(updated_config_name);
 
-if is_deployed(deployment_id)
+% uncomment this when deployment service supports deploying monitoring agents
+%start_monitoring_topology(deployment_id); 
+
+if is_deployed(deployment_id) && strcmp(status,'deployed') % verifying deployment though storm API and deployment service status
     [expdata_csv_name]=update_expdata(deployment_id);
-    undeploy(deployment_id);
+    undeploy(blueprint_id);
     pause(sleep_time/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
     summarize_expdata(expdata_csv_name,setting); % this also update a csv file
     [latency,throughput]=retrieve_data(exp_name);
