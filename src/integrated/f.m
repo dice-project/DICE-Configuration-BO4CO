@@ -15,8 +15,9 @@ sleep_time=getmcruserdata('sleep_time');
 setting=domain2option(options_,x);
 
 % deploy the application under a specific setting
-[updated_config_name]=update_config(setting);
-[deployment_id,blueprint_id,status]=deploy(updated_config_name);
+%[updated_config_name]=update_config(setting);
+updated_blueprint_name=update_blueprint(setting);
+[deployment_id,blueprint_id,status]=deploy(updated_blueprint_name);
 
 % uncomment this when deployment service supports deploying monitoring agents
 %start_monitoring_topology(deployment_id); 

@@ -1,5 +1,5 @@
 function init()
-global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic ds_username
+global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint
 config % global parameters initialized
 
 % read configuration parameters
@@ -21,11 +21,12 @@ if ~isdeployed
     exp_time=runConfig.expTime;
     sleep_time=runConfig.sleep_time;
     topic=runConfig.topic;
+    blueprint=runConfig.blueprint;
     
     options=params.param_options;
     domain=options2domain(options);
     
-    deployment_service=services{1,1};    
+    deployment_service=services{1,1};
     ci_service=services{1,2}.URL;
     mon_service=services{1,3}.URL;
     storm=services{1,4}.URL;
@@ -44,6 +45,7 @@ else
     setmcruserdata('exp_time',runConfig.expTime);
     setmcruserdata('sleep_time',runConfig.sleep_time);
     setmcruserdata('topic',runConfig.topic);
+    setmcruserdata('blueprint',runConfig.blueprint);
     
     setmcruserdata('options',params.param_options);
     setmcruserdata('domain',options2domain(options));
