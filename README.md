@@ -11,10 +11,10 @@ Configuration Optimization Tool for Big Data Systems
 Documentation can be found here:
 [wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki)
 
-## Paper
+## [Paper](https://www.doc.ic.ac.uk/~pjamshid/PDF/mascots16.pdf)
 For more technical details about the approach that has been implemented in the tool please refer to:
 ```
-P. Jamshidi, G. Casale, "An Uncertainty-Aware Approach to Optimal Configuration of Stream Processing Systems", in Proc. of IEEE MASCOTS, (September 2016), [PDF](https://www.doc.ic.ac.uk/~pjamshid/PDF/mascots16.pdf).
+P. Jamshidi, G. Casale, "An Uncertainty-Aware Approach to Optimal Configuration of Stream Processing Systems", in Proc. of IEEE MASCOTS, (September 2016).
 ```
 
 If you are looking for the DevOps enabled configuration optimization tool, please refer to:
