@@ -6,15 +6,17 @@ function [deployment_id,blueprint_id,status]=deploy(config_name)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global config_folder deployment_service storm
+global config_folder deployment_service storm topology
 
 % this make the code mcr compatible for global vars
 if ~isdeployed
     dirpath=config_folder;
     deployment_service_=deployment_service;
+    topology_=topology;
 else
     dirpath=getmcruserdata('config_folder');
     deployment_service_=getmcruserdata('deployment_service');
+    topology_=getmcruserdata('topology');
 end
 % retrieve the yaml file
 yaml_file=strcat(dirpath,config_name);
@@ -26,7 +28,7 @@ content = fscanf(fileID,'%c');
 eol = [char(13),char(10)];
 boundary='------------------------7pooyan7';
 service_url = [deployment_service_.URL '/containers/' deployment_service_.container '/blueprint'];
-options = weboptions('KeyName','Authorization','KeyValue',['Token ',get_token()],'MediaType',['multipart/form-data; boundary=' boundary]);
+options = weboptions('Timeout',30,'KeyName','Authorization','KeyValue',['Token ',get_token()],'MediaType',['multipart/form-data; boundary=' boundary]);
 data=['--' boundary eol];
 data=[data 'Content-Disposition: form-data; name="file"; filename="' config_name '"',eol];
 data=[data 'Content-Type: application/octet-stream',eol];
@@ -40,7 +42,7 @@ blueprint_id=response.blueprint.id;
 
 % wait until the deployment service deploys the system
 service_url = [deployment_service_.URL '/blueprints/' blueprint_id];
-options = weboptions('KeyName','Authorization','KeyValue',['Token ',get_token()]);
+options = weboptions('Timeout',30,'KeyName','Authorization','KeyValue',['Token ',get_token()]);
 response = webread(service_url,options);
 status=response.state_name;
 while ~strcmp(status,'deployed')
@@ -52,7 +54,19 @@ while ~strcmp(status,'deployed')
         return
     end
 end
-deployment_id=response.outputs.wordcount_id.value;
+
+% this searchers through the output to locate the infromation about the
+% topology which is just deployed
+output_response=response.outputs;
+outputs_filed_names=fieldnames(output_response);
+for i=1:length(outputs_filed_names)
+if ~isempty(strfind(lower(outputs_filed_names{i}),lower(topology_)))
+    deployment_info=getfield(output_response,outputs_filed_names{i});
+end
+end
+
+deployment_id=deployment_info.value;
+
 % set the ip address of storm UI
 if ~isdeployed
     storm = response.outputs.storm_nimbus_address.value;
