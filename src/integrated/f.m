@@ -8,9 +8,16 @@ function [latency,throughput]=f(x)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-exp_name=getmcruserdata('exp_name');
+global exp_name options sleep_time
+if ~isdeployed
+    exp_name_=exp_name;
+    options_=options;
+    sleep_time_=sleep_time;
+else
+exp_name_=getmcruserdata('exp_name');
 options_=getmcruserdata('options');
-sleep_time=getmcruserdata('sleep_time');
+sleep_time_=getmcruserdata('sleep_time');
+end
 
 setting=domain2option(options_,x);
 
@@ -25,9 +32,9 @@ updated_blueprint_name=update_blueprint(setting);
 if is_deployed(deployment_id) && strcmp(status,'deployed') % verifying deployment though storm API and deployment service status
     [expdata_csv_name]=update_expdata(deployment_id);
     undeploy(blueprint_id);
-    pause(sleep_time/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
+    pause(sleep_time_/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
     summarize_expdata(expdata_csv_name,setting); % this also update a csv file
-    [latency,throughput]=retrieve_data(exp_name);
+    [latency,throughput]=retrieve_data(exp_name_);
 else % -1 means there was some problem...
     latency=-1;
     throughput=-1;
