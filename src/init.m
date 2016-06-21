@@ -57,4 +57,7 @@ else
     setmcruserdata('kafka',services{1,5}.URL);
 end
 
+% setup the python path (for deployment service)
+set_python_path;
+
 %setting=domain2option(options,[1 5 1 3 1 1]);

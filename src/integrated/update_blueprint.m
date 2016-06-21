@@ -18,8 +18,8 @@ end
 configuration_description_file='../conf/expconfig.yaml';
 current_index=length(dir([config_folder_ 'blueprint*.yaml']));
 blueprint_template=[config_folder_ blueprint_];
-updated_blueprint_name=[config_folder_ 'blueprint_' num2str(current_index+1) '.yaml'];
-copyfile(blueprint_template, updated_blueprint_name,'f');
+updated_blueprint_name=['blueprint_' num2str(current_index+1) '.yaml'];
+copyfile(blueprint_template, [config_folder_ updated_blueprint_name],'f');
 
 intermediate_json='values.json';
 
@@ -30,7 +30,7 @@ fclose(fileID);
 
 % prepare the command to be executed
 cli='update-blueprint-parameters.py';
-cmd=[[deployment_service_.tools cli] ' -o ' configuration_description_file ' -c ' ...
-    [config_folder_ intermediate_json] ' -b ' blueprint_template ' -O ' updated_blueprint_name ' --json'];
+cmd=[cli ' -o ' configuration_description_file ' -c ' ...
+    [config_folder_ intermediate_json] ' -b ' blueprint_template ' -O ' [config_folder_ updated_blueprint_name] ' --json'];
 system(cmd);
 end

@@ -14,9 +14,9 @@ if ~isdeployed
     options_=options;
     sleep_time_=sleep_time;
 else
-exp_name_=getmcruserdata('exp_name');
-options_=getmcruserdata('options');
-sleep_time_=getmcruserdata('sleep_time');
+    exp_name_=getmcruserdata('exp_name');
+    options_=getmcruserdata('options');
+    sleep_time_=getmcruserdata('sleep_time');
 end
 
 setting=domain2option(options_,x);
@@ -24,10 +24,18 @@ setting=domain2option(options_,x);
 % deploy the application under a specific setting
 %[updated_config_name]=update_config(setting);
 updated_blueprint_name=update_blueprint(setting);
-[deployment_id,blueprint_id,status]=deploy(updated_blueprint_name);
+status='preparing'; deployment_id='';
+try
+    [deployment_id,blueprint_id,status]=deploy(updated_blueprint_name);
+catch ME
+    switch ME.identifier
+        case 'MATLAB:webservices:CopyContentToDataStreamError'
+            warning(ME.message);
+    end
+end
 
 % uncomment this when deployment service supports deploying monitoring agents
-%start_monitoring_topology(deployment_id); 
+%start_monitoring_topology(deployment_id);
 
 if is_deployed(deployment_id) && strcmp(status,'deployed') % verifying deployment though storm API and deployment service status
     [expdata_csv_name]=update_expdata(deployment_id);

@@ -2,11 +2,11 @@
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global nMinGridPoints istestfun visualize maxIter maxExp exp_name domain;
+global nMinGridPoints istestfun visualize maxIter maxExp exp_name domain mode;
 
 if ~isdeployed
     nMinGridPoints=1e5;
-    istestfun=1;
+    istestfun=0;
     visualize=0;
     
     maxIter = 110; % number of search iterations

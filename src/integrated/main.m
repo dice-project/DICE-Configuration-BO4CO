@@ -2,11 +2,14 @@
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
+% adding the BO4CO paths to the search path
+%setup();
+
 % initilize the global variables
 init();
 
 % retrieve some settings
-global domain exp_budget initial_design exp_name summary_folder
+global domain exp_budget initial_design exp_name summary_folder mode
 if ~isdeployed
     domain_=domain;
     maxIter=exp_budget;
@@ -21,6 +24,8 @@ else
     summary_folder_=getmcruserdata('summary_folder');
 end
 expData = []; % init matrix saving experimental data
+
+cd './integrated' % change the current folder
 
 %% this is the analytical function we want to find it's minimum (a wrapper for the response function)
 % domain represents the domain of the function
@@ -45,11 +50,27 @@ for k = 1:size(obsX, 1)
     obsY(k) = f(obsX(k, :));
 end
 
+k=1;
+while k<=nInit
+    if obsY(k)<0
+        obsY(k)=[];
+        obsX(k, :)=[];
+        maxIter=maxIter+1;
+        nInit=nInit-1;
+    else k=k+1;
+    end
+end
+
 %% Bayesian optimization loop (for locating minimizer)
 for k = 1:maxIter
     % every 10 sec check whether to stop or pause or continue running
     while 1
-        switch getmcruserdata('mode')
+        if ~isdeployed
+            exec_mode = mode;
+        else
+            exec_mode = getmcruserdata('mode');
+        end
+        switch exec_mode
             case 'running'
                 break
             case 'pause'
@@ -65,9 +86,12 @@ for k = 1:maxIter
     % evaluate at the suggested point
     nextY = f(nextX);
     
-    % save the measurement pair and CIs
-    obsX = [obsX; nextX];
-    obsY = [obsY; nextY];   
+    if nextY>0 % only if the measurement were successful add to the observation list
+        % save the measurement pair and CIs
+        obsX = [obsX; nextX];
+        obsY = [obsY; nextY];
+    else maxIter=maxIter+1; % the measurement were unsuccessful because of deployment failure so we did not consume the budget
+    end
 end
 
 % saving the replication data

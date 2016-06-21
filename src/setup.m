@@ -5,6 +5,7 @@ function setup
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
 disp('Starting BO4CO, setting path...');
+pathCell = regexp(path, pathsep, 'split');
 
 myDir = fileparts(mfilename('fullpath'));
 paths = genpath(myDir);
@@ -16,12 +17,14 @@ for i=1:length(paths)
     thisPathSplit = strread(thisPath,'%s','delimiter','/');
     addThisPath = 1;
     
-    % Do not add any directories or files starting with a . or a ~
+    % Do not add any directories or files starting with a . or a ~ or if it
+    % currently on the path
     for j=1:length(thisPathSplit)
         thisStr = thisPathSplit{j};
-        if (~isempty(thisStr)) && ((thisStr(1) == '.') || (thisStr(1) == '~'))
+        if (~isempty(thisStr)) && ((thisStr(1) == '.') || (thisStr(1) == '~')) || any(strcmpi(thisStr, pathCell))
             addThisPath = 0;
         end
+        
     end
     if addThisPath ==1
         if ~isempty(pathsToAdd)
@@ -35,6 +38,8 @@ addpath(pathsToAdd);
 
 % setup the GPML package, GPML is a dependency for BO4CO
 run([strcat(myDir,filesep), 'external/libs/', 'gpml-matlab-v3.6-2015-07-07/', 'startup'])
+
+
 
 % if you want to not run this when you exit matlab uncomment this, use
 % this: which pathdef.m -all
