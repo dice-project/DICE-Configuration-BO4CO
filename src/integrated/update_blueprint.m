@@ -23,7 +23,7 @@ copyfile(blueprint_template, [config_folder_ updated_blueprint_name],'f');
 
 intermediate_json='values.json';
 
-setting_struct=struct('config',setting);
+setting_struct=struct('config',{num2cell(setting)});
 fileID = fopen([config_folder_ intermediate_json],'w');
 fprintf(fileID,mls.internal.toJSON(setting_struct));
 fclose(fileID);

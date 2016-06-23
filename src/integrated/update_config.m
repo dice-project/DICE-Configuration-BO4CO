@@ -6,7 +6,7 @@ function [updated_config_name]=update_config(setting)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global topology options config_template
+global topology options config_template config_folder
 
 % this makes the function mcr firendly
 % we use var_ unified notations for the local variables 
@@ -14,10 +14,12 @@ if ~isdeployed
     options_=options;
     config_template_=config_template;
     topology_=topology;
+    dirpath=config_folder;
 else
     options_=getmcruserdata('options');
     config_template_=getmcruserdata('config_template');
     topology_=getmcruserdata('topology');
+    dirpath=getmcruserdata('config_folder');
 end
 
 % list of parameters' name
@@ -26,8 +28,9 @@ for i=1:length(options_)
 end
 
 % retrieve the configuration template with (default) values
-dirpath='./config/';
-yaml_file=strcat(config_template_);
+
+%dirpath='./config/';
+yaml_file=strcat(dirpath, config_template_);
 configs = ReadYaml(yaml_file);
 
 % update the parameters with the setting values

@@ -1,10 +1,10 @@
 function init()
-global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint
+global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint application storm_ui
 config % global parameters initialized
 
 % read configuration parameters
 yamlfile='conf/expconfig.yaml';
-[params, runConfig, services] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
+[params, runConfig, services, application] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
 
 if ~isdeployed
     topology=runConfig.topologyName;
@@ -30,6 +30,7 @@ if ~isdeployed
     ci_service=services{1,2}.URL;
     mon_service=services{1,3}.URL;
     storm=services{1,4}.URL;
+    storm_ui=services{1,4};
     kafka=services{1,5}.URL;
 else
     setmcruserdata('topology',runConfig.topologyName);
