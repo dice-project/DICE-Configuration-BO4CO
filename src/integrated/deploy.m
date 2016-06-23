@@ -23,6 +23,7 @@ yaml_file=strcat(dirpath,config_name);
 %configs = ReadYaml(yaml_file);
 fileID = fopen(yaml_file,'r');
 content = fscanf(fileID,'%c');
+fclose(fileID);
 
 % runs the deployment service to deploy the system with the current config
 eol = [char(13),char(10)];

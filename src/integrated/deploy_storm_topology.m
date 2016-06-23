@@ -18,7 +18,7 @@ else
     application_=getmcruserdata('application');
 end
 extrastr = ' ';
-config_file=strcat(dirpath, topology_config_name);
+%config_file=strcat(dirpath, topology_config_name);
 
 % check whether an existing topology exists and udenploys it in case
 [deployment_id, status]=get_deployment_info(application_.name);
@@ -32,7 +32,7 @@ ssh2_conn.remote_file_mode = 0777; % change to a more readable permission
 ssh2_conn = ssh2_command(ssh2_conn,['sudo chmod 777 ' storm_ui_.storm_client 'conf']);
 
 % copy the updated config file to the storm UI VM
-ssh2_conn = scp_simple_put(storm_ui_.ip,storm_ui_.username,storm_ui_.password,config_file,[storm_ui_.storm_client 'conf']);
+ssh2_conn = scp_simple_put(storm_ui_.ip,storm_ui_.username,storm_ui_.password,topology_config_name,[storm_ui_.storm_client 'conf'],dirpath);
 % check whether the current version of the application is in the remote
 % server, note new versions should be reflected via input configuration
 % file via application_.jar_file

@@ -39,6 +39,11 @@ addpath(pathsToAdd);
 % setup the GPML package, GPML is a dependency for BO4CO
 run([strcat(myDir,filesep), 'external/libs/', 'gpml-matlab-v3.6-2015-07-07/', 'startup'])
 
+% setup ssh2
+
+conn = ssh2_setup();
+conn = ssh2_setup(conn);
+conn = ssh2_setup(now());
 
 
 % if you want to not run this when you exit matlab uncomment this, use

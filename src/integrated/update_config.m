@@ -9,7 +9,7 @@ function [updated_config_name]=update_config(setting)
 global topology options config_template config_folder
 
 % this makes the function mcr firendly
-% we use var_ unified notations for the local variables 
+% we use var_ unified notations for the local variables
 if ~isdeployed
     options_=options;
     config_template_=config_template;
@@ -33,16 +33,23 @@ end
 yaml_file=strcat(dirpath, config_template_);
 configs = ReadYaml(yaml_file);
 
-% update the parameters with the setting values
+% update the parameters of interests with new values 
 updated_config=configs;
 for i=1:length(params_name)
-    updated_config=setfield(updated_config,char(params_name(i)),setting(i));
+    updated_config=setfield(updated_config,strrep(char(params_name(i)),'.','0x2E'),setting(i));
 end
 
 % create a timestamped file name
-updated_config_name=strcat(topology_,'_config_',num2str(datenum(datetime('now')),'%bu'));
-updated_config_file=strcat(dirpath,updated_config_name,'.yaml');
+updated_config_name=strcat(topology_,'_config_',num2str(datenum(datetime('now')),'%bu'),'.yaml');
+updated_config_file=strcat(dirpath,updated_config_name);
 
 WriteYaml(updated_config_file,updated_config);
+
+% replace '0x2E' with dots because struct in matlab does not support dots in the fieldsname 
+content = fileread(updated_config_file);
+new_content = strrep(content,'0x2E','.');
+fileID = fopen(updated_config_file,'wt');
+fprintf(fileID,new_content);
+fclose(fileID);
 
 end

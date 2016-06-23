@@ -25,7 +25,7 @@ else
 end
 expData = []; % init matrix saving experimental data
 
-cd './integrated' % change the current folder
+%cd './integrated' % change the current folder
 
 %% this is the analytical function we want to find it's minimum (a wrapper for the response function)
 % domain represents the domain of the function

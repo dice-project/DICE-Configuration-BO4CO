@@ -10,8 +10,7 @@ global  exp_name save_folder summary_folder
 if ~isdeployed
     exp_name_=exp_name;
     save_folder_=save_folder;
-    summary_folder_=summary_folder;
-    
+    summary_folder_=summary_folder;    
 else
     exp_name_ = getmcruserdata('exp_name');
     save_folder_=getmcruserdata('save_folder');

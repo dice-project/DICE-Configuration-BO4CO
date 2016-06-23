@@ -10,7 +10,7 @@ if isdeployed
     ip = getmcruserdata('storm');
 else ip=storm;
 end
-wait_time=60; % Wait time before rebalance happens
+wait_time=10; % Wait time before rebalance happens
 api='/api/v1/topology/';
 url=[ip api deployment_id '/kill/' num2str(wait_time)];
 options = weboptions('RequestMethod','post');

@@ -8,15 +8,17 @@ function [latency,throughput]=f(x)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global exp_name options sleep_time storm
+global exp_name options sleep_time storm storm_ui
 if ~isdeployed
     exp_name_=exp_name;
     options_=options;
     sleep_time_=sleep_time;
+    storm_ui_=storm_ui;
 else
     exp_name_=getmcruserdata('exp_name');
     options_=getmcruserdata('options');
     sleep_time_=getmcruserdata('sleep_time');
+    storm_ui_=getmcruserdata('storm_ui');
 end
 
 setting=domain2option(options_,x);
@@ -26,9 +28,9 @@ setting=domain2option(options_,x);
 
 if ~isempty(nimbus_ip)
     if ~isdeployed % update storm ip address
-        storm=nimbus_ip;
+        storm_ui_.ip=nimbus_ip;
     else
-        setmcruserdata('storm',nimbus_ip);
+        setmcruserdata('nimbus_ip',nimbus_ip);
     end
     [updated_config_name]=update_config(setting);
     try
@@ -56,13 +58,19 @@ end
 %start_monitoring_topology(deployment_id);
 
 if is_deployed(deployment_id) && strcmp(status,'deployed') % verifying deployment though storm API and deployment service status
-    fprintf('the system id %s is deployed', deployment_id);
+    fprintf('application %s is deployed with setting %s \n', deployment_id,num2str(setting'));
     [expdata_csv_name]=update_expdata(deployment_id);
     %undeploy(blueprint_id);
     undeploy_storm_topology(deployment_id);
-    pause(sleep_time_/60); % convert to seconds and wait for the experiment to finish and retireve the performance data
-    summarize_expdata(expdata_csv_name,setting); % this also update a csv file
-    [latency,throughput]=retrieve_data(exp_name_);
+    pause(sleep_time_/1000); % convert to seconds and wait for the experiment to finish and retireve the performance data
+    is_summarized=summarize_expdata(expdata_csv_name,setting); % this also update a csv file
+    if is_summarized
+        [latency,throughput]=retrieve_data(exp_name_);
+        fprintf('the measured latency and throughput of the application %s are respectively: %bx, %bx \n', deployment_id,latency,throughput);
+    else
+        latency=-1;
+        throughput=-1;
+    end
 else % -1 means there was some problem...
     latency=-1;
     throughput=-1;

@@ -20,10 +20,10 @@ else
     csv_folder=getmcruserdata('save_folder');
 end
 
-nimbus_api='/api/v1/nimbus/summary';
+%nimbus_api='/api/v1/nimbus/summary';
 api='/api/v1/topology/';
 url=[ip api deployment_id];
-url_nimbus=[ip nimbus_api];
+%url_nimbus=[ip nimbus_api];
 options = weboptions('RequestMethod','get');
 
 i=0;
@@ -39,7 +39,7 @@ while true
     end
     % do query to get stats
     top_stats = webread(url,options);
-    nimbus_stats=webread(url_nimbus,options);
+    %nimbus_stats=webread(url_nimbus,options);
     %nimbus_status=nimbus_stats.status;
     % update internal array index 2,3 for topology stats, 4,5 for spout
     % stats and rest for bolt stats
