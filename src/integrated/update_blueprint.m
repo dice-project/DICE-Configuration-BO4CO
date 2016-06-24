@@ -1,21 +1,20 @@
 function updated_blueprint_name=update_blueprint(setting)
 % this is a wrapper for update blueprint command of deployment service
+% see this for more information: https://github.com/dice-project/DICE-Deployment-Service/blob/master/doc/configuration-optimization-process.md
 
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global blueprint config_folder deployment_service
+global blueprint config_folder
 if ~isdeployed
     blueprint_=blueprint;
     config_folder_=config_folder;
-    deployment_service_=deployment_service;
 else
     blueprint_ = getmcruserdata('blueprint');
     config_folder_=getmcruserdata('config_folder');
-    deployment_service_=getmcruserdata('deployment_service');
 end
-configuration_description_file='../conf/expconfig.yaml';
+configuration_description_file='./conf/expconfig.yaml';
 current_index=length(dir([config_folder_ 'blueprint*.yaml']));
 blueprint_template=[config_folder_ blueprint_];
 updated_blueprint_name=['blueprint_' num2str(current_index+1) '.yaml'];

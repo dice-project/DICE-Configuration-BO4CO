@@ -21,7 +21,7 @@ end
 
 api='/api/v1/topology/summary';
 url=[ip api];
-options = weboptions('RequestMethod','get');
+options = weboptions('RequestMethod','get','Timeout',30);
 data = webread(url,options);
 for i=1:size(data.topologies,1)
     if strcmp(data.topologies(i).id,deployment_id) && strcmp(data.topologies(i).status,'ACTIVE')

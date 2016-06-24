@@ -3,7 +3,7 @@
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
 % adding the BO4CO paths to the search path
-%setup();
+setup();
 
 % initilize the global variables
 init();

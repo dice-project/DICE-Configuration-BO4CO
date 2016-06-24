@@ -37,7 +37,7 @@ if ~isempty(nimbus_ip)
         % deploy the application under a specific setting
         [deployment_id,status]=deploy_storm_topology(updated_config_name);
     catch ME
-        warning(ME.mesage);
+        warning(ME.message);
     end
 else
     % deploy the application under a specific setting

@@ -5,7 +5,13 @@ function [obsX,obsY]=retrieve_all_data(exp_name)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-dirpath='./summary/';
+global summary_folder
+if ~isdeployed
+    dirpath=summary_folder;
+else
+    dirpath=getmcruserdata('summary_folder');
+end
+%dirpath='./summary/';
 filename=strcat(dirpath,exp_name,'.csv');
 
 if exist(filename, 'file')

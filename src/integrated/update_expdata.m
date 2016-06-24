@@ -38,28 +38,32 @@ while true
         break;
     end
     % do query to get stats
+    try
     top_stats = webread(url,options);
+    catch ME
+        warning(ME.message);
+        continue
+    end
     %nimbus_stats=webread(url_nimbus,options);
     %nimbus_status=nimbus_stats.status;
     % update internal array index 2,3 for topology stats, 4,5 for spout
     % stats and rest for bolt stats
-    
-    headerRow={'time (s)','top_completeLatency (ms)','top_transferred (messages)'};
-    
-    data(i,1)=round(now_); % column 1 is dedicated for current timestamp
-    data(i,2)=str2double(top_stats.topologyStats(4).completeLatency);
-    data(i,3)=top_stats.topologyStats(4).transferred;
-    for j=1:size(top_stats.spouts,1)
-        data(i,3+2*j-1)=str2double(top_stats.spouts(j).completeLatency);
-        data(i,3+2*j)=top_stats.spouts(j).transferred;
-        headerRow(3+2*j-1:3+2*j)={'spout_completeLatency (ms)','spout_transferred (messages)'};
-    end
-    for k=1:size(top_stats.bolts,1)
-        data(i,3+2*size(top_stats.spouts,1)+3*k-2)=str2double(top_stats.bolts(k).executeLatency);
-        data(i,3+2*size(top_stats.spouts,1)+3*k-1)=top_stats.bolts(k).executed;
-        data(i,3+2*size(top_stats.spouts,1)+3*k)=str2double(top_stats.bolts(k).capacity);
-        headerRow(3+2*size(top_stats.spouts,1)+3*k-2:3+2*size(top_stats.spouts,1)+3*k)={'bolt_executeLatency (ms)','bolt_executed (messages)','capacity'};
-        
+    if length(top_stats.topologyStats)==4
+        headerRow={'time (s)','top_completeLatency (ms)','top_transferred (messages)'};
+        data(i,1)=round(now_); % column 1 is dedicated for current timestamp
+        data(i,2)=str2double(top_stats.topologyStats(4).completeLatency);
+        data(i,3)=top_stats.topologyStats(4).transferred;
+        for j=1:size(top_stats.spouts,1)
+            data(i,3+2*j-1)=str2double(top_stats.spouts(j).completeLatency);
+            data(i,3+2*j)=top_stats.spouts(j).transferred;
+            headerRow(3+2*j-1:3+2*j)={'spout_completeLatency (ms)','spout_transferred (messages)'};
+        end
+        for k=1:size(top_stats.bolts,1)
+            data(i,3+2*size(top_stats.spouts,1)+3*k-2)=str2double(top_stats.bolts(k).executeLatency);
+            data(i,3+2*size(top_stats.spouts,1)+3*k-1)=top_stats.bolts(k).executed;
+            data(i,3+2*size(top_stats.spouts,1)+3*k)=str2double(top_stats.bolts(k).capacity);
+            headerRow(3+2*size(top_stats.spouts,1)+3*k-2:3+2*size(top_stats.spouts,1)+3*k)={'bolt_executeLatency (ms)','bolt_executed (messages)','capacity'};
+        end
     end
 end
 

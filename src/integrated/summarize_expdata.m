@@ -1,24 +1,27 @@
 function [status]=summarize_expdata(expdata_csv_name,setting)
 % this calculates the mean throughput and latency for the experiment run with a specific
-% configuration. status==0 successful, 1 unsuccessful
+% configuration. status==1 successful, 0 unsuccessful
+
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
 
-global  exp_name save_folder summary_folder
+global  exp_name save_folder summary_folder polling_time
 if ~isdeployed
     exp_name_=exp_name;
     save_folder_=save_folder;
-    summary_folder_=summary_folder;    
+    summary_folder_=summary_folder;
+    polling_interval=polling_time;
 else
     exp_name_ = getmcruserdata('exp_name');
     save_folder_=getmcruserdata('save_folder');
     summary_folder_=getmcruserdata('summary_folder');
+    polling_interval=getmcruserdata('polling_time');
 end
 
-% this is to cut the unstable monitoring data in the first 2-3 minutes
-firstrow=120;
+% this is to cut the unstable monitoring data in the first 2 minutes
+firstrow=120000/polling_interval;
 % throughput and latency measurements are located in col 11,12
 throughput_col_index=2;%11
 latency_column_index=1;%12
@@ -44,8 +47,8 @@ end
 if ~isempty(summary)
     % we use dlmwrite in order to use -append feature
     dlmwrite(strcat(summary_folder_,exp_name_,'.csv'),summary,'-append');
-    status=0;
-else
     status=1;
+else
+    status=0;
 end
 end
