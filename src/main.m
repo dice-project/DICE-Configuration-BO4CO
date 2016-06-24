@@ -2,13 +2,13 @@
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-% adding the BO4CO paths to the search path
+%% adding the BO4CO paths and the dependencies to the search path
 setup();
 
-% initilize the global variables
+%% initilize the global variables
 init();
 
-% retrieve some settings
+% retrieve the settings from the input file specified by testers
 global domain exp_budget initial_design exp_name summary_folder mode
 if ~isdeployed
     domain_=domain;
@@ -23,33 +23,35 @@ else
     exp_name_=getmcruserdata('exp_name');
     summary_folder_=getmcruserdata('summary_folder');
 end
-expData = []; % init matrix saving experimental data
+%expData = []; % init matrix saving experimental data
 
-%cd './integrated' % change the current folder
+% domain represents the domain of the configuration parameters
+% dimension of the space (number of parameters considered in the 'vars' section of the input YAML file)
+d = size(domain_, 1); 
 
-%% this is the analytical function we want to find it's minimum (a wrapper for the response function)
-% domain represents the domain of the function
-d = size(domain_, 1); % dimension of the space
-
-%% create the grid
+% create the grid
 %[xTest, xTestDiff, nTest, nTestPerDim] = makeGrid(xRange, nMinGridPoints);
 
 %% initialize the prior
 gps = covarianceKernelFactory(12, d);
 
-%% initial samples from the Latin Hypercube design
-% (this section should be genralized in a way to replace any DoE that gives initial design such as random, etc...)
+%% initial samples from the Latin Hypercube design (initial design)
+% this is genralized in a way that experimenter can replace any DoE that 
+% gives initial design such as random, uniform, etc...)
 maxIter=maxIter-nInit;
 
 %obsX = lhsdesign(d, nInit)';
 obsX = lhsdesign4grid(d, nInit, domain_);
 %obsX = unirnddesign4grid(d, nInit, domain);
+
 obsY = zeros(size(obsX, 1), 1);
 
 for k = 1:size(obsX, 1)
     obsY(k) = f(obsX(k, :));
 end
 
+% during the measurements may be some iterations fail and we need to
+% exclude them from the observation list
 k=1;
 while k<=nInit
     if obsY(k)<0
@@ -61,9 +63,12 @@ while k<=nInit
     end
 end
 
-%% Bayesian optimization loop (for locating minimizer)
+%% Bayesian optimization loop (for locating minimizer), iterative experiments are conducted here
 for k = 1:maxIter
     % every 10 sec check whether to stop or pause or continue running
+    % the reason for this is that at some point the tester may want to stop
+    % the optimization process and free up the testing environment for
+    % another testing activity in DevOps pipeline
     while 1
         if ~isdeployed
             exec_mode = mode;
@@ -80,7 +85,7 @@ for k = 1:maxIter
         end
         pause(10);
     end
-    % criterial to evaluate in order to find where to sample next
+    % criteria to evaluate in order to find where to sample next
     [nextX, dummy1, xTest, m, s, z, ef,h,et] = boLCB(domain_, obsX, obsY, gps);
     
     % evaluate at the suggested point
@@ -90,12 +95,16 @@ for k = 1:maxIter
         % save the measurement pair and CIs
         obsX = [obsX; nextX];
         obsY = [obsY; nextY];
-    else maxIter=maxIter+1; % the measurement were unsuccessful because of deployment failure so we did not consume the budget
+    else % the measurement were unsuccessful because of deployment failure so we did not consume the budget
+        maxIter=maxIter+1; 
     end
 end
 
+%% Result: at this point the optimum configuration within the experimental budget is found
+
 % saving the replication data
-expData=[expData obsX obsY];
+expData=[obsX obsY];
 save([summary_folder_ exp_name_ '.mat'],expData);
-%% update the config with what has been found
-get_config();
+% update the config file with what has been found
+[config_file]=get_config();
+fprintf('optimum configuration file is available: %s \n',config_file);
