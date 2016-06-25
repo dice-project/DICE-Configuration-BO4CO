@@ -9,34 +9,41 @@ setup();
 init();
 
 % retrieve the settings from the input file specified by testers
-global domain exp_budget initial_design exp_name summary_folder mode
+global domain exp_budget initial_design exp_name summary_folder mode deployment_service
 if ~isdeployed
     domain_=domain;
     maxIter=exp_budget;
     nInit=initial_design;
     exp_name_=exp_name;
     summary_folder_=summary_folder;
+    deployment_service_=deployment_service;
 else
     domain_=getmcruserdata('domain');
     maxIter=getmcruserdata('exp_budget');
     nInit=getmcruserdata('initial_design');
     exp_name_=getmcruserdata('exp_name');
     summary_folder_=getmcruserdata('summary_folder');
+    deployment_service_=getmcruserdata('deployment_service');
 end
-%expData = []; % init matrix saving experimental data
 
 % domain represents the domain of the configuration parameters
 % dimension of the space (number of parameters considered in the 'vars' section of the input YAML file)
-d = size(domain_, 1); 
+d = size(domain_, 1);
 
 % create the grid
 %[xTest, xTestDiff, nTest, nTestPerDim] = makeGrid(xRange, nMinGridPoints);
+
+%% verify whether deployment service and other depedent services are available and accessible
+if ~is_deployment_container_exists()
+    fprintf('the container %s is not accessible \n', deployment_service_.container);
+    return
+end
 
 %% initialize the prior
 gps = covarianceKernelFactory(12, d);
 
 %% initial samples from the Latin Hypercube design (initial design)
-% this is genralized in a way that experimenter can replace any DoE that 
+% this is genralized in a way that experimenter can replace any DoE that
 % gives initial design such as random, uniform, etc...)
 maxIter=maxIter-nInit;
 
@@ -96,7 +103,7 @@ for k = 1:maxIter
         obsX = [obsX; nextX];
         obsY = [obsY; nextY];
     else % the measurement were unsuccessful because of deployment failure so we did not consume the budget
-        maxIter=maxIter+1; 
+        maxIter=maxIter+1;
     end
 end
 
