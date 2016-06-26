@@ -1,6 +1,7 @@
 function workload = extract_workload(log_file,spout_name)
 % extracts the messages pushed into the topology via the spout named as spout_name
 % this is used for replaying previous workloads
+% example: data=extract_data_in_timestamps('worker-6703.log','word-reader')
 
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
