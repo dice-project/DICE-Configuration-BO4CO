@@ -43,7 +43,7 @@ $ cd DICE-Configuration-BO4CO
 First the install MCR on the platform you intends to runt he tool, e.g., here is the instructions for `ubuntu`: 
 
 ```bash
-$ cd DICE-Configuration-BO4CO
+$ cd install
 $ ./install_mcr.sh
 ```
 
@@ -60,6 +60,7 @@ $ cp deploy/run_bo4co.sh src
 The user of the tool needs to configure BO4CO by specifying the configuration parameters at the following input configuration file:
 
 ```bash
+$ cd DICE-Configuration-BO4CO/
 $ vim conf/expconfig.yaml
 ```
 
@@ -69,20 +70,23 @@ To run BO4CO you just need to run the following bash script:
 
 
 ```bash
-$ vim src/run_bo4co.sh
+$ cd scr/
+$ ./run_bo4co.sh
 ```
 
-## Documentation 
-[wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki)
+## Complementary materials 
+* [Paper](https://arxiv.org/pdf/1606.06543v1) is the key paper about BO4CO. 
+* [wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki): provides more details about the tool and setting up the environment.
+* [data](https://zenodo.org/record/56238) is the experimental datasets.
+* [presentation] (www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
+* [gitxiv] (http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
+* [TL4CO](https://github.com/dice-project/DICE-Configuration-TL4CO) is the DevOps enabled configuration optimization tool.
 
-## [Paper](https://arxiv.org/pdf/1606.06543v1)
+### [Paper]
 For more technical details about the approach that has been implemented in the tool please refer to:
 ```
 P. Jamshidi, G. Casale, "An Uncertainty-Aware Approach to Optimal Configuration of Stream Processing Systems", in Proc. of IEEE MASCOTS, (September 2016).
 ```
-
-If you are looking for the DevOps enabled configuration optimization tool, please refer to:
-[TL4CO](https://github.com/dice-project/DICE-Configuration-TL4CO)
 
 ## Contact
 
