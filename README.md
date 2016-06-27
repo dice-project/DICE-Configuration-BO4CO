@@ -32,7 +32,7 @@ Or, to obtain the tool, use the following steps:
 ```bash
 $ mkdir -p ~/myrepos ; cd ~/myrepos
 $ wget https://github.com/dice-project/DICE-Configuration-BO4CO/archive/master.zip
-$ unzip master.zip
+$ unzip DICE-Configuration-BO4CO-master.zip
 # This step is only to unify the result with the one from the git download
 $ mv DICE-Configuration-BO4CO-master DICE-Configuration-BO4CO
 $ cd DICE-Configuration-BO4CO
@@ -89,7 +89,7 @@ $ ./run_bo4co.sh
 * [Paper](https://arxiv.org/pdf/1606.06543v1) is the key paper about BO4CO. 
 * [Wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki) provides more details about the tool and setting up the environment.
 * [Data](https://zenodo.org/record/56238) is the experimental datasets.
-* [presentation] (www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
+* [Presentation] (www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
 * [Gitxiv] (http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
 * [TL4CO](https://github.com/dice-project/DICE-Configuration-TL4CO) is the DevOps enabled configuration optimization tool.
 
