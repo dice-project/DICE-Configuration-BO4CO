@@ -6,7 +6,7 @@ function [deployment_id, status]=get_deployment_info(topology_name)
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 global storm
 
-status=0;
+status='';
 deployment_id='';
 if isempty(topology_name)
     return

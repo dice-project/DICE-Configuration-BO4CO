@@ -78,6 +78,8 @@ end
 function result = scan_numeric(r)
     if isempty(r)
         result = java.util.ArrayList();
+    elseif isinteger(r) || (r==round(r))
+        result = java.lang.Integer(r);
     else
         result = java.lang.Double(r);
     end
@@ -89,7 +91,7 @@ end
 
 function result = scan_logical(r)
     if isempty(r)
-        result = java.util.ArrayList();
+        result = java.util.ArrayList();        
     else
         result = java.lang.Boolean(r);
     end
@@ -133,7 +135,7 @@ function result = scan_cell(r)
         result = scan_cell_column(r);
     elseif(ismymatrix(r))
         result = scan_cell_matrix(r);
-    elseif(issingle(r));
+    elseif(issingle(r))
         result = scan_cell_single(r);
     elseif(isempty(r))
         result = java.util.ArrayList();

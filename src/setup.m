@@ -21,7 +21,7 @@ for i=1:length(paths)
     % currently on the path
     for j=1:length(thisPathSplit)
         thisStr = thisPathSplit{j};
-        if (~isempty(thisStr)) && ((thisStr(1) == '.') || (thisStr(1) == '~')) || any(strcmpi(thisStr, pathCell))
+        if (~isempty(thisStr)) && ((thisStr(1) == '.') || (thisStr(1) == '~')) || any(strcmpi(thisPath, pathCell))
             addThisPath = 0;
         end
         
@@ -34,11 +34,14 @@ for i=1:length(paths)
     end
 end
 
-addpath(pathsToAdd);
+if ~isempty(pathsToAdd)
+    addpath(pathsToAdd);
+end
 
-% setup the GPML package, GPML is a dependency for BO4CO
-run([strcat(myDir,filesep), 'external/libs/', 'gpml-matlab-v3.6-2015-07-07/', 'startup'])
-
+if ~any(strcmpi([strcat(myDir,filesep) 'external/libs/', 'gpml-matlab-v3.6-2015-07-07/' 'cov'], pathCell)) % if GPML is not already on the path
+    % setup the GPML package, GPML is a dependency for BO4CO
+    run([strcat(myDir,filesep), 'external/libs/', 'gpml-matlab-v3.6-2015-07-07/', 'startup'])
+end
 % setup ssh2
 
 conn = ssh2_setup();

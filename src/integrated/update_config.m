@@ -48,6 +48,7 @@ WriteYaml(updated_config_file,updated_config);
 % replace '0x2E' with dots because struct in matlab does not support dots in the fieldsname 
 content = fileread(updated_config_file);
 new_content = strrep(content,'0x2E','.');
+new_content = strrep(new_content,'''null''','null'); % I dont know why 'null' is with single quotation marks!!!
 fileID = fopen(updated_config_file,'wt');
 fprintf(fileID,new_content);
 fclose(fileID);

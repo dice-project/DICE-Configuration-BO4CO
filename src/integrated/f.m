@@ -29,8 +29,10 @@ setting=domain2option(options_,x);
 if ~isempty(nimbus_ip)
     if ~isdeployed % update storm ip address
         storm_ui_.ip=nimbus_ip;
+        storm = ['http://' nimbus_ip ':8080'];
     else
         setmcruserdata('nimbus_ip',nimbus_ip);
+        setmcruserdata('storm',['http://' nimbus_ip ':8080']);
     end
     [updated_config_name]=update_config(setting);
     try
