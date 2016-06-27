@@ -43,7 +43,7 @@ $ cd DICE-Configuration-BO4CO
 First the install MCR on the platform you intends to runt he tool, e.g., here is the instructions for `ubuntu`: 
 
 ```bash
-$ cd install
+$ cd install/
 $ ./install_mcr.sh
 ```
 
@@ -55,14 +55,25 @@ $ cp deploy/ubuntu64/main deploy/ubuntu64/* src
 $ cp deploy/run_bo4co.sh src
 ```
 
+
 ### Tool configuration
 
-The user of the tool needs to configure BO4CO by specifying the configuration parameters at the following input configuration file:
+The user of the tool needs to configure BO4CO by specifying the configuration parameters in `expconfig.yaml`:
 
 ```bash
 $ cd DICE-Configuration-BO4CO/
 $ vim conf/expconfig.yaml
 ```
+
+The experimental suite component of BO4CO is depdent on [DICE Deployment service](https://github.com/dice-project/DICE-Deployment-Service), so before starting BO4CO, the deployment service needs to be installed:
+
+```bash
+$ mkdir -p ~/myrepos ; cd ~/myrepos
+$ git clone https://github.com/dice-project/DICE-Deployment-Service.git
+```
+
+In the `services` field in `expconfig.yaml` the location of the deployment services tools needs to be updated accordingly, i.e., `~/myrepos/DICE-Deployment-Service/tools`.
+
 
 ### Starting BO4CO
 
@@ -76,10 +87,10 @@ $ ./run_bo4co.sh
 
 ## Complementary materials 
 * [Paper](https://arxiv.org/pdf/1606.06543v1) is the key paper about BO4CO. 
-* [wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki): provides more details about the tool and setting up the environment.
-* [data](https://zenodo.org/record/56238) is the experimental datasets.
+* [Wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki) provides more details about the tool and setting up the environment.
+* [Data](https://zenodo.org/record/56238) is the experimental datasets.
 * [presentation] (www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
-* [gitxiv] (http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
+* [Gitxiv] (http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
 * [TL4CO](https://github.com/dice-project/DICE-Configuration-TL4CO) is the DevOps enabled configuration optimization tool.
 
 ### [Paper]
