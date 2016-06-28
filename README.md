@@ -67,21 +67,26 @@ $ vim conf/expconfig.yaml
 
 `expconfig.yaml` comprises several important parts: `runexp` specifies the experimental parameters, `services` comprises the detals of the services which BO4CO uses, `application` is the details of the application, e.g., storm topology and the associated Java classes, and most importantly the details of the configuration parameters are specified in `vars` field.  
 
-For example, the following parameters specify the experimentl time (ms), polling interval (ms) and the interval time between each experimental iterations:
+For example, the following parameters specify the experimental budget (i.e., total number of iterations), the number of initial samples, the experimental time, polling interval and the interval time between each experimental iterations, all in milliseconds:
 
-    sleep_time: 10000
-    metricPoll: 1000
-    expTime: 300000
+    runexp:
+      numIter: 100
+      initialDesign: 10
+      ...
+      expTime: 300000
+      metricPoll: 1000
+      sleep_time: 10000
 
 The following parameters specify the name of the configuration parameter, the node for which it is going to be used, possible values for the parameter and lower bound and upper bound if it is integer, otherwise it would be categorical. 
 
-    - paramname: "topology.max.spout.pending" 
-      node: ["storm", "nimbus"] 
-      options: [1 2 10 100 1000 10000]
-      lowerbound: 0
-      upperbound: 0
-      integer: 0
-      categorical: 1
+    vars:
+      - paramname: "topology.max.spout.pending" 
+        node: ["storm", "nimbus"] 
+        options: [1 2 10 100 1000 10000]
+        lowerbound: 0
+        upperbound: 0
+        integer: 0
+        categorical: 1
 
 The experimental suite component of BO4CO is depdent on [DICE Deployment service](https://github.com/dice-project/DICE-Deployment-Service), so before starting BO4CO, the deployment service needs to be installed:
 
@@ -95,7 +100,7 @@ Moreover, the DICE deployment service needs to be running soemwhere (see the [gu
     services:    
       - servicename: "deployment.service"
         URL: "http://xxx.xxx.xxx.xxx:8000"
-        container: "2470bab7-eb25-40be-b021-a1cfbccd5a9f"
+        container: "CONTAINER ID"
         username: "your username"
         password: "your password"
         tools: "/Repos/DICE-Deployment-Service/tools"

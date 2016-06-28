@@ -3,45 +3,44 @@ runexp:
   noise: 1e-5
   numIter: 100
   initialDesign: 10
-  saveFolder: ./reports/
-  confFolder: ./config/
-  summaryFolder: ./summary/
-  topologyName: "wordcount" # this is the name of the topology in the blueprint
+  saveFolder: "./integrated/reports/"
+  confFolder: "./integrated/config/"
+  summaryFolder: "./integrated/summary/"
   blueprint: "storm-fco.yaml"
   conf: "wordcount.yaml"
   topic: "jsontest" # kafka configurations, this topic is used for pushing testing tuples into
   sleep_time: 10000
   metricPoll: 1000
-  expTime: 60000
+  expTime: 300000
 # the url of the services confioguration optimization is depend on or use
 services:
   - servicename: "deployment.service"
-    URL: "http://109.231.122.58:8000"
-    container: "3082812a-046f-4df8-9dab-ebfd9d408fb8"
-    username: "pooyan"
-    password: "co#pyn066"
+    URL: "URL"
+    container: "CONTAINER ID"
+    username: "USERNAME"
+    password: "PASSWORD"
     tools: "/Repos/DICE-Deployment-Service/tools"
   - servicename: "continuousintegration.service"
     URL: "localhost:4985"
   - servicename: "monitoring.service"
-    URL: "http://109.231.121.139:5001"
+    URL: "URL"
   - servicename: "storm_ui"
-    URL: "http://109.231.122.206:8080"
-    ip: "109.231.122.206"
-    username: "ubuntu"
-    password: "D63Cp9Czbfe4c5Ms"  
+    URL: "URL"
+    ip: "IP"
+    username: "USERNAME"
+    password: "PASSWORD"  
     storm_client: "/usr/share/storm/0.9.3/"  
   - servicename: "broker"
-    URL: "http://localhost:8082" # kafka  
+    URL: "URL" # kafka  
   - servicename: "zookeeper.servers"
-    URL: "localhost:2181" # kafka 
-    ip: [109.231.122.99]
+    URL: "URL" # kafka 
+    ip: ["IP"]
 application:
-  jar_file: storm-starter-0.9.3.jar
-  jar_path: http://109.231.122.66/jenkins/view/DICE%20Review/job/02%20Build%20Word%20Count/lastSuccessfulBuild/artifact/target/storm-starter-0.9.3.jar
-  class: storm.starter.WordCountTopology
-  name: wordcount
-  type: storm
+  jar_file: "storm-starter-0.9.3.jar"
+  jar_path: URL # this is a URL from which the jar file will be submited, you can put the prepared jar file into dropbox and use the dropbox link here
+  class: "storm.starter.WordCountTopology"
+  name: "wordcount"
+  type: "storm"
 # information about the parameters, note that for each parameter the specific technology
 # , e.g., storm, is also specified via "node"
 vars:
@@ -87,24 +86,24 @@ vars:
     upperbound: 0
     integer: 0
     categorical: 1
-  - paramname: "tickTime"
-    node: "zookeeper"
-    options: [2000 3000 4000]
-    lowerbound: 0
-    upperbound: 0
-    integer: 0
-    categorical: 1
-  - paramname: "initLimit"
-    node: "zookeeper"
-    options: [5 10 15]
-    lowerbound: 0
-    upperbound: 0
-    integer: 0
-    categorical: 1
-  - paramname: "syncLimit"
-    node: zookeeper
-    options: [2 3 4]
-    lowerbound: 0
-    upperbound: 0
-    integer: 0
-    categorical: 1
+  # - paramname: "tickTime"
+  #   node: "zookeeper"
+  #   options: [2000 3000 4000]
+  #   lowerbound: 0
+  #   upperbound: 0
+  #   integer: 0
+  #   categorical: 1
+  # - paramname: "initLimit"
+  #   node: "zookeeper"
+  #   options: [5 10 15]
+  #   lowerbound: 0
+  #   upperbound: 0
+  #   integer: 0
+  #   categorical: 1
+  # - paramname: "syncLimit"
+  #   node: zookeeper
+  #   options: [2 3 4]
+  #   lowerbound: 0
+  #   upperbound: 0
+  #   integer: 0
+  #   categorical: 1

@@ -4,10 +4,12 @@ config % global parameters initialized
 
 % read configuration parameters
 yamlfile='conf/expconfig.yaml';
-[params, runConfig, services, application] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
+[params, runConfig, services, application_detail] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
 
 if ~isdeployed
-    topology=runConfig.topologyName;
+    application=application_detail;
+    
+    topology=application_detail.name;
     % init the experiment name with time stamp
     exp_name=strcat(topology,'_exp_',num2str(datenum(datetime('now')),'%bu'));
     
@@ -34,7 +36,9 @@ if ~isdeployed
     kafka=services{1,5}.URL;
     zookeeper=services{1,6};
 else
-    setmcruserdata('topology',runConfig.topologyName);
+    setmcruserdata('application',application_detail);
+
+    setmcruserdata('topology',application_detail.name);
     setmcruserdata('exp_name',strcat(topology,'_exp_',num2str(datenum(datetime('now')),'%bu')));
     
     setmcruserdata('config_template',runConfig.conf);
