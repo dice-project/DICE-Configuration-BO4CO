@@ -1,5 +1,5 @@
 function init()
-global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint application storm_ui
+global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint application storm_ui zookeeper
 config % global parameters initialized
 
 % read configuration parameters
@@ -32,6 +32,7 @@ if ~isdeployed
     storm=services{1,4}.URL;
     storm_ui=services{1,4};
     kafka=services{1,5}.URL;
+    zookeeper=services{1,6};
 else
     setmcruserdata('topology',runConfig.topologyName);
     setmcruserdata('exp_name',strcat(topology,'_exp_',num2str(datenum(datetime('now')),'%bu')));
@@ -56,6 +57,7 @@ else
     setmcruserdata('mon_service',services{1,3}.URL);
     setmcruserdata('storm',services{1,4}.URL);
     setmcruserdata('kafka',services{1,5}.URL);
+    setmcruserdata('zookeeper',services{1,6}); 
 end
 
 % setup the python path (for deployment service)

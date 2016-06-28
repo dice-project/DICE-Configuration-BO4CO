@@ -39,7 +39,7 @@ while true
     end
     % do query to get stats
     try
-    top_stats = webread(url,options);
+        top_stats = webread(url,options);
     catch ME
         warning(ME.message);
         continue
@@ -59,10 +59,11 @@ while true
             headerRow(3+2*j-1:3+2*j)={'spout_completeLatency (ms)','spout_transferred (messages)'};
         end
         for k=1:size(top_stats.bolts,1)
-            data(i,3+2*size(top_stats.spouts,1)+3*k-2)=str2double(top_stats.bolts(k).executeLatency);
-            data(i,3+2*size(top_stats.spouts,1)+3*k-1)=top_stats.bolts(k).executed;
-            data(i,3+2*size(top_stats.spouts,1)+3*k)=str2double(top_stats.bolts(k).capacity);
-            headerRow(3+2*size(top_stats.spouts,1)+3*k-2:3+2*size(top_stats.spouts,1)+3*k)={'bolt_executeLatency (ms)','bolt_executed (messages)','capacity'};
+            data(i,3+2*size(top_stats.spouts,1)+4*k-3)=str2double(top_stats.bolts(k).executeLatency);
+            data(i,3+2*size(top_stats.spouts,1)+4*k-2)=top_stats.bolts(k).executed;
+            data(i,3+2*size(top_stats.spouts,1)+4*k-1)=str2double(top_stats.bolts(k).capacity);
+            data(i,3+2*size(top_stats.spouts,1)+4*k)=str2double(top_stats.bolts(k).processLatency);
+            headerRow(3+2*size(top_stats.spouts,1)+4*k-3:3+2*size(top_stats.spouts,1)+4*k)={'bolt_executeLatency (ms)','bolt_executed (messages)','capacity','bolt_processLatency (ms)'};
         end
     end
 end
@@ -73,5 +74,8 @@ if ~isdir(csv_folder)
 end
 %csvwrite([csv_folder expdata_csv_name],headerRow);
 %csvwrite([csv_folder expdata_csv_name],data);
-csvwrite_with_headers([csv_folder expdata_csv_name],data,headerRow);
+if ~isempty(data)
+    csvwrite_with_headers([csv_folder expdata_csv_name],data,headerRow);
+else expdata_csv_name='';
+end
 end

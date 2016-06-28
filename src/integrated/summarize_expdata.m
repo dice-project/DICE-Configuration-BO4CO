@@ -23,20 +23,31 @@ end
 % this is to cut the unstable monitoring data in the first 2 minutes
 firstrow=120000/polling_interval;
 % throughput and latency measurements are located in col 11,12
-throughput_col_index=2;%11
-latency_column_index=1;%12
+latency_column_index=2;%12
+throughput_col_index=3;%11
 
 summary=[];
 
 filename=[save_folder_ expdata_csv_name];
-lastrow=number_of_rows(filename);
-thiscsv=csvread(filename,firstrow,latency_column_index,[firstrow,latency_column_index,lastrow-1,throughput_col_index]);
+%lastrow=number_of_rows(filename);
+thiscsv=csvread(filename,firstrow,0);
 
 % if instead of mean percentile required replace it with prctile(X,p)
 if ~isempty(thiscsv)
-    latency=mean(nonzeros(thiscsv(:,1)));
-    throughput=mean(nonzeros(thiscsv(:,2)));
-    summary=[summary; setting throughput latency];
+    latency=mean(thiscsv(:,latency_column_index));
+    throughput=mean(thiscsv(:,throughput_col_index));
+    
+    if latency==0 % means the topology is not reliable and we need to estimate end to end latency by summing process latency of the bolts
+        no_column=size(thiscsv,2);
+        current_index=5+4; % column 1 is index, 2 columns for topology and 2 columns forspout stats, see the csv files, 4 for each bolt and the last one is for process latency
+        process_latency=0;
+        while current_index<=no_column
+            process_latency=process_latency+mean(thiscsv(:,current_index));
+            current_index=current_index+4;
+        end
+        latency = process_latency; % we use process latency to estimate the end to end latency then
+    end
+    summary=[setting throughput latency];
 end
 
 % writing data to the performance data repository

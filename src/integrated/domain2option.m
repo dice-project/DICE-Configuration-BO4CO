@@ -11,7 +11,7 @@ end
 setting=[];
 for i=1:length(option)
     optionarr=str2num(option{2,i});
-    setting=[setting;optionarr(1,index(i))];
+    setting=[setting optionarr(1,index(i))];
 end
 
 end

@@ -44,10 +44,11 @@ if ~any(strcmpi([strcat(myDir,filesep) 'external/libs/', 'gpml-matlab-v3.6-2015-
 end
 % setup ssh2
 
+cd('external/libs/ssh2/ssh2v2');
 conn = ssh2_setup();
 conn = ssh2_setup(conn);
 conn = ssh2_setup(now());
-
+cd(myDir);
 
 % if you want to not run this when you exit matlab uncomment this, use
 % this: which pathdef.m -all

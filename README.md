@@ -65,12 +65,40 @@ $ cd DICE-Configuration-BO4CO/
 $ vim conf/expconfig.yaml
 ```
 
+`expconfig.yaml` comprises several important parts: `runexp` specifies the experimental parameters, `services` comprises the detals of the services which BO4CO uses, `application` is the details of the application, e.g., storm topology and the associated Java classes, and most importantly the details of the configuration parameters are specified in `vars` field.  
+
+For example, the following parameters specify the experimentl time (ms), polling interval (ms) and the interval time between each experimental iterations:
+
+    sleep_time: 10000
+    metricPoll: 1000
+    expTime: 300000
+
+The following parameters specify the name of the configuration parameter, the node for which it is going to be used, possible values for the parameter and lower bound and upper bound if it is integer, otherwise it would be categorical. 
+
+    - paramname: "topology.max.spout.pending" 
+      node: ["storm", "nimbus"] 
+      options: [1 2 10 100 1000 10000]
+      lowerbound: 0
+      upperbound: 0
+      integer: 0
+      categorical: 1
+
 The experimental suite component of BO4CO is depdent on [DICE Deployment service](https://github.com/dice-project/DICE-Deployment-Service), so before starting BO4CO, the deployment service needs to be installed:
 
 ```bash
 $ mkdir -p ~/myrepos ; cd ~/myrepos
 $ git clone https://github.com/dice-project/DICE-Deployment-Service.git
 ```
+
+Moreover, the DICE deployment service needs to be running soemwhere (see the [guideline](https://github.com/dice-project/DICE-Deployment-Service/blob/master/doc/AdminGuide.md)) and the associated filed in `expconfig.yaml` needs to be updated accordingly:
+
+    services:    
+      - servicename: "deployment.service"
+        URL: "http://xxx.xxx.xxx.xxx:8000"
+        container: "2470bab7-eb25-40be-b021-a1cfbccd5a9f"
+        username: "your username"
+        password: "your password"
+        tools: "/Repos/DICE-Deployment-Service/tools"
 
 In the `services` field in `expconfig.yaml` the location of the deployment services tools needs to be updated accordingly, i.e., `~/myrepos/DICE-Deployment-Service/tools`.
 
@@ -89,8 +117,8 @@ $ ./run_bo4co.sh
 * [Paper](https://arxiv.org/pdf/1606.06543v1) is the key paper about BO4CO. 
 * [Wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki) provides more details about the tool and setting up the environment.
 * [Data](https://zenodo.org/record/56238) is the experimental datasets.
-* [Presentation] (www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
-* [Gitxiv] (http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
+* [Presentation](http://www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
+* [Gitxiv](http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
 * [TL4CO](https://github.com/dice-project/DICE-Configuration-TL4CO) is the DevOps enabled configuration optimization tool.
 
 ### Paper

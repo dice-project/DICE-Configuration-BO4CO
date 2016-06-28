@@ -34,10 +34,12 @@ if ~isempty(nimbus_ip)
         setmcruserdata('nimbus_ip',nimbus_ip);
         setmcruserdata('storm',['http://' nimbus_ip ':8080']);
     end
-    [updated_config_name]=update_config(setting);
+    %[updated_config_name]=update_config(setting); I decided to pass
+    %setting directly to deploy_storm_topology instead of passing the
+    %updated config file
     try
         % deploy the application under a specific setting
-        [deployment_id,status]=deploy_storm_topology(updated_config_name);
+        [deployment_id,status]=deploy_storm_topology(setting);
     catch ME
         warning(ME.message);
     end
@@ -60,15 +62,19 @@ end
 %start_monitoring_topology(deployment_id);
 
 if is_deployed(deployment_id) && strcmp(status,'deployed') % verifying deployment though storm API and deployment service status
-    fprintf('application %s is deployed with setting %s \n', deployment_id,num2str(setting'));
+    fprintf('%s is deployed with setting [%s] \n', deployment_id,num2str(setting));
     [expdata_csv_name]=update_expdata(deployment_id);
     %undeploy(blueprint_id);
     undeploy_storm_topology(deployment_id);
     pause(sleep_time_/1000); % convert to seconds and wait for the experiment to finish and retireve the performance data
-    is_summarized=summarize_expdata(expdata_csv_name,setting); % this also update a csv file
+    if ~isempty(expdata_csv_name)
+        is_summarized=summarize_expdata(expdata_csv_name,setting); % this also update a csv file
+    else
+        is_summarized=0;
+    end
     if is_summarized
         [latency,throughput]=retrieve_data(exp_name_);
-        fprintf('the measured latency and throughput of the application %s are respectively: %bx, %bx \n', deployment_id,latency,throughput);
+        fprintf('the average latency and throughput of %s are respectively: %d, %d \n', deployment_id,latency,throughput);
     else
         latency=-1;
         throughput=-1;
