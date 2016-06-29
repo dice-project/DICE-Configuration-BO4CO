@@ -6,15 +6,15 @@ Configuration Optimization Tool for Big Data Systems
 Bayesian Optimization for Configuration Optimization (BO4CO) is an auto-tuning algorithm for Big Data applications. Big data applications typically are developed with several technologies (e.g., Apache Storm, Hadoop, Spark, Cassandra) each of which has typically dozens of configurable parameters that should be carefully tuned in order to perform optimally. BO4CO helps end users of big data systems such as data scientists or SMEs to automatically tune the system.  
 
 ## Architecture
-The following figure illustrates all the components of BO4CO:
+The following figure illustrates components of BO4CO:
 (i) optimization component, (ii) experimental suite, (iii) and a data broker. 
 
 ![BO4CO architecture](doc/latex/figures/bo4co-arch.png)
 
 
-## How to use
+## Usage
 
-The configuration tool works in `deployed` and `MATLAB` mode. `deployed` mode does not need any MATLAB installation and only is dependent on a royalty free [MATLAB compiler](http://uk.mathworks.com/products/compiler/mcr/). 
+The configuration tool works in `deployed` and `MATLAB` mode. The `deployed` mode does not need any MATLAB installation and only is dependent on a royalty free [MATLAB Runtime (MCR)](http://uk.mathworks.com/products/compiler/mcr/). 
 
 ### Getting BO4CO
 
@@ -69,24 +69,28 @@ $ vim conf/expconfig.yaml
 
 For example, the following parameters specify the experimental budget (i.e., total number of iterations), the number of initial samples, the experimental time, polling interval and the interval time between each experimental iterations, all in milliseconds:
 
-    runexp:
-      numIter: 100
-      initialDesign: 10
-      ...
-      expTime: 300000
-      metricPoll: 1000
-      sleep_time: 10000
+```yaml
+runexp:
+  numIter: 100
+  initialDesign: 10
+  ...
+  expTime: 300000
+  metricPoll: 1000
+  sleep_time: 10000
+```
 
 The following parameters specify the name of the configuration parameter, the node for which it is going to be used, possible values for the parameter and lower bound and upper bound if it is integer, otherwise it would be categorical. 
 
-    vars:
-      - paramname: "topology.max.spout.pending" 
-        node: ["storm", "nimbus"] 
-        options: [1 2 10 100 1000 10000]
-        lowerbound: 0
-        upperbound: 0
-        integer: 0
-        categorical: 1
+```yaml
+vars:
+  - paramname: "topology.max.spout.pending" 
+    node: ["storm", "nimbus"] 
+    options: [1 2 10 100 1000 10000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+```
 
 The experimental suite component of BO4CO is depdent on [DICE Deployment service](https://github.com/dice-project/DICE-Deployment-Service), so before starting BO4CO, the deployment service needs to be installed:
 
@@ -97,25 +101,75 @@ $ git clone https://github.com/dice-project/DICE-Deployment-Service.git
 
 Moreover, the DICE deployment service needs to be running soemwhere (see the [guideline](https://github.com/dice-project/DICE-Deployment-Service/blob/master/doc/AdminGuide.md)) and the associated filed in `expconfig.yaml` needs to be updated accordingly:
 
-    services:    
-      - servicename: "deployment.service"
-        URL: "http://xxx.xxx.xxx.xxx:8000"
-        container: "CONTAINER ID"
-        username: "your username"
-        password: "your password"
-        tools: "/Repos/DICE-Deployment-Service/tools"
+```yaml
+services:    
+  - servicename: "deployment.service"
+    URL: "http://xxx.xxx.xxx.xxx:8000"
+    container: "CONTAINER ID"
+    username: "your username"
+    password: "your password"
+    tools: "/Repos/DICE-Deployment-Service/tools"
+```
+
 
 In the `services` field in `expconfig.yaml` the location of the deployment services tools needs to be updated accordingly, i.e., `~/myrepos/DICE-Deployment-Service/tools`.
 
 
 ### Starting BO4CO
 
-To run BO4CO you just need to run the following bash script:
+To run BO4CO you just need to execute the following bash script, make sure the configuration parameters are set properly before running this:
 
 
 ```bash
 $ cd scr/
 $ ./run_bo4co.sh
+```
+
+### Demo
+
+It is also possible to optimize arbitrary functions with BO4CO where each measurement corresponds to a function evaluation in MATLAB. For runnig BO4CO demo follow these instructions:
+
+
+```Matlab
+run setup.m
+edit conf/config.m # set nMinGridPoints, istestfun, visualize, maxExp, maxIter, nInit
+run demo/demo_bo4co.m
+```
+
+#### Visualization
+
+![GP estimate](results/gp-example1/gp-1.svg)
+...
+![GP estimate](results/gp-example1/gp-18.svg)
+
+#### Output
+
+```Matlab
+Grid point is better than previous hyperparameter
+Function evaluation      0;  Value -1.375336e+02
+Function evaluation      9;  Value -4.517219e+02
+Function evaluation     13;  Value -5.702309e+02
+Function evaluation     15;  Value -5.872137e+02
+Function evaluation     18;  Value -5.929673e+02
+Function evaluation     21;  Value -6.039209e+02
+Function evaluation     24;  Value -6.069675e+02
+Function evaluation     27;  Value -6.071938e+02
+
+Grid point is better than previous hyperparameter
+Function evaluation      0;  Value -1.395701e+02
+Function evaluation      9;  Value -4.609277e+02
+Function evaluation     19;  Value -5.797697e+02
+Function evaluation     20;  Value -6.006878e+02
+Function evaluation     23;  Value -6.072819e+02
+Function evaluation     25;  Value -6.145497e+02
+Function evaluation     28;  Value -6.161177e+02
+Function evaluation     35;  Value -6.169813e+02
+
+Minimum value: -0.636812 found at:
+-1.0131
+
+True minimum value: -0.636816 at:
+-1.0127    1.0127
 ```
 
 ## Complementary materials 
