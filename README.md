@@ -138,9 +138,9 @@ run demo/demo_bo4co.m
 
 #### Visualization
 
-![GP estimate](results/gp-example1/gp-1.svg)
+![GP estimate](results/gp-example1/gp-1.png)
 ...
-![GP estimate](results/gp-example1/gp-18.svg)
+![GP estimate](results/gp-example1/gp-18.png)
 
 #### Output
 
