@@ -3,3 +3,5 @@ BO4CO
 .DS_Store
 *.mat
 temp
+bin
+bin.zip
