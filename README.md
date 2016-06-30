@@ -40,20 +40,32 @@ $ cd DICE-Configuration-BO4CO
 
 ### Installation
 
-First the install MCR on the platform you intends to runt he tool, e.g., here is the instructions for `ubuntu`: 
+First, install MCR on the platform you intends to run the tool, e.g., here is the instructions for `ubuntu`: 
 
 ```bash
 $ cd install/
 $ ./install_mcr.sh
 ```
 
-Then the compiled main file needs to get copied to the `src` folder:
+### Compilation
+
+We already prepared the compiled versions for `ubuntu64` and `maci64` deployment target. So only the compiled files needs to get copied into the `target` folder, where BO4CO will be deployed:
 
 ```bash
 $ cd DICE-Configuration-BO4CO/
-$ cp deploy/ubuntu64/main deploy/ubuntu64/* src
-$ cp deploy/run_bo4co.sh src
+$ cp deploy/ubuntu64/* target
+$ cp deploy/run_bo4co.sh target
+$ cp src/conf target
 ```
+
+It is also possible to prepare a new compiled version for a new target architecture such as `windows64`. You only need to run the following command in MATLAB on the target environment (i.e., target architecture and MCR version) in order to compile the source files:
+
+```Matlab
+cd DICE-Configuration-BO4CO/src
+run compile.m
+```
+
+Note that it is essential to run `compile.m` in the target environment otherwise the execution of the compiled version will fail. We are happy to provide compiled version for a target environment, you only need to drop us an email, see contact bellow.
 
 
 ### Tool configuration

@@ -1,7 +1,7 @@
 #!/bin/sh
 # script for execution of deployed applications
 #
-# Sets up the MATLAB Runtime environment for the current $ARCH and executes 
+# Sets up the MATLAB runtime environment for the current $ARCH and executes 
 # the specified command.
 #
 exe_name=$0
