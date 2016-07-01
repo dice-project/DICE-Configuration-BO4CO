@@ -184,6 +184,8 @@ True minimum value: -0.636816 at:
 -1.0127    1.0127
 ```
 
+### [Live Demo](https://cdn.rawgit.com/dice-project/DICE-Configuration-BO4CO/master/src/demo/demo_bo4co.html)
+
 ## Complementary materials 
 * [Paper](https://arxiv.org/pdf/1606.06543v1) is the key paper about BO4CO. 
 * [Wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki) provides more details about the tool and setting up the environment.
