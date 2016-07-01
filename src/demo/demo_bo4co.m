@@ -1,7 +1,9 @@
-% The demo file for BO4CO
+%% Demo for BO4CO (Bayesian optimization for Configuration Optimization)
+% BO4CO is a Configuration Optimization Tool for Big Data Systems
 % this script uses synthetic functions as response instead of experimental
-% measurements, this is only for demonstration of the underlying method
-% details: https://arxiv.org/abs/1606.06543
+% measurements, this is only for demonstration of the underlying machine learning method
+% more details: https://arxiv.org/abs/1606.06543
+
 % When referring to the dataset or code please cite the paper:
 % P. Jamshidi, G. Casale, "An Uncertainty-Aware Approach to Optimal Configuration of Stream Processing Systems", MASCOTS 2016.
 
@@ -10,7 +12,6 @@
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
 %% initilizations
-%import bo4co.*
 close all;
 clear variables;
 clc;
@@ -116,7 +117,7 @@ for exp=1:maxExp
                 hold on; plot(xTest, m); plot(obsX, obsY, '*');
                 % current estimate
                 hold on; plot(nextX, nextY,'o');
-                %saveas(gcf,strcat('gp-',num2str(k),'.fig'));
+                saveas(gcf,strcat('gp-',num2str(k),'.fig'));
                 
                 %h3=figure(2); plot(z); % if you use boTS
                 %disp('paused');
