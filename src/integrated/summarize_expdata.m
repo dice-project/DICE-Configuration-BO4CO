@@ -29,9 +29,12 @@ throughput_col_index=3;%11
 summary=[];
 
 filename=[save_folder_ expdata_csv_name];
-%lastrow=number_of_rows(filename);
-thiscsv=csvread(filename,firstrow,0);
-
+lastrow=number_of_rows(filename);
+if lastrow>firstrow
+    thiscsv=csvread(filename,firstrow,0);
+else
+    thiscsv=[];
+end
 % if instead of mean percentile required replace it with prctile(X,p)
 if ~isempty(thiscsv)
     latency=mean(thiscsv(:,latency_column_index));

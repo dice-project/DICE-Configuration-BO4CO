@@ -4,6 +4,11 @@ config % global parameters initialized
 
 % read configuration parameters
 yamlfile='conf/expconfig.yaml';
+if isdeployed
+    appRoot = ctfroot;
+    copyfile(yamlfile,[appRoot '/main/conf'],'f'); % copy the local configs to the deployment
+end
+
 [params, runConfig, services, application_detail] = readConfig(yamlfile); % Read parameter settings both for the experimental runs and configuration parameters
 
 if ~isdeployed
@@ -37,14 +42,14 @@ if ~isdeployed
     zookeeper=services{1,6};
 else
     setmcruserdata('application',application_detail);
-
+    
     setmcruserdata('topology',application_detail.name);
     setmcruserdata('exp_name',strcat(topology,'_exp_',num2str(datenum(datetime('now')),'%bu')));
     
     setmcruserdata('config_template',runConfig.conf);
     setmcruserdata('config_folder',runConfig.confFolder);
     setmcruserdata('save_folder',runConfig.saveFolder);
-    setmcruserdata('summary_folder',runConfig.saveFolder);
+    setmcruserdata('summary_folder',runConfig.summaryFolder);
     setmcruserdata('exp_budget',runConfig.numIter);
     setmcruserdata('initial_design',runConfig.initialDesign);
     setmcruserdata('polling_time',runConfig.metricPoll);
@@ -62,7 +67,7 @@ else
     setmcruserdata('storm',services{1,4}.URL);
     setmcruserdata('storm_ui',services{1,4});
     setmcruserdata('kafka',services{1,5}.URL);
-    setmcruserdata('zookeeper',services{1,6}); 
+    setmcruserdata('zookeeper',services{1,6});
 end
 
 % setup the python path (for deployment service)
