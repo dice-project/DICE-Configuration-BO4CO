@@ -9,7 +9,7 @@ Bayesian Optimization for Configuration Optimization (BO4CO) is an auto-tuning a
 The following figure illustrates components of BO4CO:
 (i) optimization component, (ii) experimental suite, (iii) and a data broker. 
 
-![BO4CO architecture](doc/latex/figures/bo4co-arch.png)
+![BO4CO architecture](doc/appendix/figures/bo4co-arch.png)
 
 
 ## Usage
@@ -38,6 +38,7 @@ $ mv DICE-Configuration-BO4CO-master DICE-Configuration-BO4CO
 $ cd DICE-Configuration-BO4CO
 ```
 
+
 ### Installation
 
 First, install MCR on the platform you intends to run the tool, e.g., here is the instructions for `ubuntu`: 
@@ -49,11 +50,13 @@ $ ./install_mcr.sh
 
 ### Compilation
 
-We already prepared the compiled versions for `ubuntu64` and `maci64` deployment target. So only the compiled files needs to get copied into the `target` folder, where BO4CO will be deployed:
+We already prepared the compiled versions for `ubuntu64` and `maci64` deployment target, for this you need to download the `bin.zip` from the latest tool [release](https://github.com/dice-project/DICE-Configuration-BO4CO/releases). So only the compiled files needs to get copied into the `target` folder, where BO4CO will be deployed:
 
 ```bash
 $ cd DICE-Configuration-BO4CO/
-$ cp deploy/ubuntu64/* target
+$ wget https://github.com/dice-project/DICE-Configuration-BO4CO/releases/download/v0.1.1/bin.zip
+$ unzip bin.zip
+$ cp bin/ubuntu64/* target
 $ cp deploy/run_bo4co.sh target
 $ cp src/conf target
 ```
@@ -73,7 +76,7 @@ Note that it is essential to run `compile.m` in the target environment otherwise
 The user of the tool needs to configure BO4CO by specifying the configuration parameters in `expconfig.yaml`:
 
 ```bash
-$ cd DICE-Configuration-BO4CO/
+$ cd target/
 $ vim conf/expconfig.yaml
 ```
 
@@ -133,9 +136,14 @@ To run BO4CO you just need to execute the following bash script, make sure the c
 
 
 ```bash
-$ cd scr/
+$ cd target/
 $ ./run_bo4co.sh
 ```
+
+### Performance Data
+
+The experimental data are stored in a performance repository located inside the `target` folder. `integrated/reports` stores the detailed measurements separated by each configuration setting in `csv` format. `integrated/summary` stores the summary of measurements in terms of average latency and throughput separated by each experiment. After the experimental budget is finished, a `MAT-File` will be dumped into the `integrated/summary` folder.  
+
 
 ### Demo
 
