@@ -57,7 +57,36 @@ switch d
     case 10
         [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2));
         xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:)];
+    case 11
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:)];
+    case 12
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:)];
+    case 13
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:)];
+    case 14
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:)];
+    case 15
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2),xRange(15, 1):1:xRange(15, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:) X15(:)];
+    case 16
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2),xRange(15, 1):1:xRange(15, 2),xRange(16, 1):1:xRange(16, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:) X15(:) X16(:)];
+    case 17
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16 ,X17] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2),xRange(15, 1):1:xRange(15, 2),xRange(16, 1):1:xRange(16, 2),xRange(17, 1):1:xRange(17, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:) X15(:) X16(:) X17(:)];
+    case 18
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17,X18] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2),xRange(15, 1):1:xRange(15, 2),xRange(16, 1):1:xRange(16, 2),xRange(17, 1):1:xRange(17, 2),xRange(18, 1):1:xRange(18, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:) X15(:) X16(:) X17(:) X18(:)];
+    case 19
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17,X18,X19] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2),xRange(15, 1):1:xRange(15, 2),xRange(16, 1):1:xRange(16, 2),xRange(17, 1):1:xRange(17, 2),xRange(18, 1):1:xRange(18, 2),xRange(19, 1):1:xRange(19, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:) X15(:) X16(:) X17(:) X18(:) X19(:)];
+    case 20
+        [X1,X2,X3,X4,X5,X6,X7,X8,X9,X10,X11,X12,X13,X14,X15,X16,X17,X18,X19,X20] = ndgrid(xRange(1, 1):1:xRange(1, 2),xRange(2, 1):1:xRange(2, 2),xRange(3, 1):1:xRange(3, 2),xRange(4, 1):1:xRange(4, 2),xRange(5, 1):1:xRange(5, 2),xRange(6, 1):1:xRange(6, 2),xRange(7, 1):1:xRange(7, 2),xRange(8, 1):1:xRange(8, 2),xRange(9, 1):1:xRange(9, 2),xRange(10, 1):1:xRange(10, 2),xRange(11, 1):1:xRange(11, 2),xRange(12, 1):1:xRange(12, 2),xRange(13, 1):1:xRange(13, 2),xRange(14, 1):1:xRange(14, 2),xRange(15, 1):1:xRange(15, 2),xRange(16, 1):1:xRange(16, 2),xRange(17, 1):1:xRange(17, 2),xRange(18, 1):1:xRange(18, 2),xRange(19, 1):1:xRange(19, 2),xRange(20, 1):1:xRange(20, 2));
+        xTest=[X1(:) X2(:) X3(:) X4(:) X5(:) X6(:) X7(:) X8(:) X9(:) X10(:) X11(:) X12(:) X13(:) X14(:) X15(:) X16(:) X17(:) X18(:) X19(:) X20(:)];        
+
 end
-
-
 end

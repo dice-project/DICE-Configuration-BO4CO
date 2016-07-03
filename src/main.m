@@ -111,7 +111,7 @@ end
 
 % saving the replication data
 expData=[obsX obsY];
-save([summary_folder_ exp_name_ '.mat'],expData);
+save([summary_folder_ exp_name_ '.mat'],'expData');
 % update the config file with what has been found
 [config_file]=get_config();
 fprintf('optimum configuration file is available: %s \n',config_file);

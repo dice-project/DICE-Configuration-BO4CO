@@ -1,20 +1,20 @@
 function [config_file]=get_config()
-% updates and get the configuration YAML file
-% (only includes the parameters testers specifies and other parameters are default)
+% prepares the optimum configuration file in YAML
+% only includes the parameters testers specifies and other parameters are assumes as default
 
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
 % The code is released under the FreeBSD License.
 % Copyright (C) 2016 Pooyan Jamshidi, Imperial College London
 
-global options save_folder exp_name
+global options summary_folder exp_name
 
 if ~deployed
     options_=options;
-    save_folder_=save_folder;
+    summary_folder_=summary_folder;
     exp_name_=exp_name;
 else
     options_=getmcruserdata('options');
-    save_folder_=getmcruserdata('save_folder');
+    summary_folder_=getmcruserdata('summary_folder');
     exp_name_=getmcruserdata('exp_name');
 end
 
@@ -28,12 +28,12 @@ for i=1:length(optimum_options)
     optimum_configuration{i,2}=optimum_options(1,i);
 end
 
-if ~isdir(save_folder_)
-    mkdir(save_folder_);
+if ~isdir(summary_folder_)
+    mkdir(summary_folder_);
 end
 
-config_file=strcat(save_folder_,exp_name_,'_config.yaml');
-
-WriteYaml(config_file,optimum_configuration);
-
+config_file=strcat(summary_folder_,exp_name_,'_optimum.yaml');
+if ~isempty(optimum_configuration)
+    WriteYaml(config_file,optimum_configuration);
+end
 end
