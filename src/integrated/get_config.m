@@ -8,7 +8,7 @@ function [config_file]=get_config()
 
 global options summary_folder exp_name
 
-if ~deployed
+if ~isdeployed
     options_=options;
     summary_folder_=summary_folder;
     exp_name_=exp_name;
