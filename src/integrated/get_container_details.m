@@ -17,7 +17,7 @@ else
     deployment_service_=getmcruserdata('deployment_service');
     topology_=getmcruserdata('topology');
 end
-
+deployment_info=struct([]);
 
 % wait until the deployment service deploys the system
 service_url = [deployment_service_.URL '/containers/' deployment_service_.container];
@@ -36,7 +36,9 @@ if strcmp(status,'deployed')
             deployment_info=getfield(output_response,outputs_filed_names{i});
         end
     end
-    deployment_id=deployment_info.value;
+    if ~isempty(deployment_info)
+        deployment_id=deployment_info.value;
+    end
 else
     blueprint_id='';
     nimbus_ip='';

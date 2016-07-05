@@ -42,9 +42,9 @@ if ~isdeployed
     zookeeper=services{1,6};
 else
     setmcruserdata('application',application_detail);
-    
+
     setmcruserdata('topology',application_detail.name);
-    setmcruserdata('exp_name',strcat(topology,'_exp_',num2str(datenum(datetime('now')),'%bu')));
+    setmcruserdata('exp_name',strcat(application_detail.name,'_exp_',num2str(datenum(datetime('now')),'%bu')));
     
     setmcruserdata('config_template',runConfig.conf);
     setmcruserdata('config_folder',runConfig.confFolder);
@@ -67,10 +67,8 @@ else
     setmcruserdata('storm',services{1,4}.URL);
     setmcruserdata('storm_ui',services{1,4});
     setmcruserdata('kafka',services{1,5}.URL);
-    setmcruserdata('zookeeper',services{1,6});
+    setmcruserdata('zookeeper',services{1,6}); 
 end
 
 % setup the python path (for deployment service)
 set_python_path;
-
-%setting=domain2option(options,[1 5 1 3 1 1]);

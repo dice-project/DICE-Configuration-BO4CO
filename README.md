@@ -18,8 +18,10 @@ The configuration tool works in `deployed` and `MATLAB` mode. The `deployed` mod
 
 ### Getting BO4CO
 
-Regardless of the method, first download the tool using git or
-a package download. With git, run the following steps:
+Regardless of the method, first download the tool using git,
+a package download, or a pre-compiled binary downloads. 
+
+Git:
 
 ```bash
 $ mkdir -p ~/myrepos ; cd ~/myrepos
@@ -27,7 +29,7 @@ $ git clone https://github.com/dice-project/DICE-Configuration-BO4CO.git
 $ cd DICE-Configuration-BO4CO
 ```
 
-Or, to obtain the tool, use the following steps:
+Package:
 
 ```bash
 $ mkdir -p ~/myrepos ; cd ~/myrepos
@@ -38,6 +40,12 @@ $ mv DICE-Configuration-BO4CO-master DICE-Configuration-BO4CO
 $ cd DICE-Configuration-BO4CO
 ```
 
+Binary releases:
+
+```bash
+$ wget https://github.com/dice-project/DICE-Configuration-BO4CO/releases/download/v0.1.1/bin.zip
+$ unzip bin.zip
+```
 
 ### Installation
 
@@ -58,7 +66,7 @@ $ wget https://github.com/dice-project/DICE-Configuration-BO4CO/releases/downloa
 $ unzip bin.zip
 $ cp bin/ubuntu64/* target
 $ cp deploy/run_bo4co.sh target
-$ cp src/conf target
+$ cp -r src/conf target
 ```
 
 It is also possible to prepare a new compiled version for a new target architecture such as `windows64`. You only need to run the following command in MATLAB on the target environment (i.e., target architecture and MCR version) in order to compile the source files:
