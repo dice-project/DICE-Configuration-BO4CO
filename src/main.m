@@ -115,3 +115,5 @@ save([summary_folder_ exp_name_ '.mat'],'expData');
 % update the config file with what has been found
 [config_file]=get_config();
 fprintf('optimum configuration file is available: %s \n',config_file);
+[optimum_performance]=get_optimum_performance();
+fprintf('optimum performance data is available: %s \n',optimum_performance);
