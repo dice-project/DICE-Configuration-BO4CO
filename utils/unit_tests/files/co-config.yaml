@@ -1,0 +1,20 @@
+saveFolder: ./integrated/reports/
+confFolder: ./integrated/config/
+summaryFolder: ./integrated/summary/
+blueprint: storm-fco.yaml
+conf: wordcount.yaml
+topic: jsontest
+services:
+  - servicename: deployment.service
+    URL: http://deployer.example.lan:8000
+    container: 7b5750a7-914e-4e83-ab40-b04fd1975542 
+    username: user
+    password: monkey123
+    tools: /Repos/DICE-Deployment-Service/tools
+  - servicename: monitoring.service
+    URL: http://10.10.45.20:5001
+  - servicename: "broker"
+    URL: http://localhost:8082 # kafka 
+  - servicename: zookeeper.servers
+    URL: localhost:2181 # kafka
+    ip: ["10.10.50.11"]
