@@ -23,6 +23,23 @@ def merge_config(install_config_path, app_config_path, expconfig_path):
     co_config = load_yaml(install_config_path)
     app_config = load_yaml(app_config_path)
 
+    def array2dict(arr, key):
+        return { v[key]: v for v in arr }
+
+    # any extra services requested by the application needs to be
+    # transferred over, while the others have to be overwritten
+    if "services" in app_config:
+        app_config_services = array2dict(app_config["services"], "servicename")
+        co_config_services = array2dict(co_config["services"],
+            "servicename")
+        app_config_services.update(co_config_services)
+
+        co_config["services"] = app_config_services.values()
+        co_config["services"].sort(key=lambda x:x["servicename"])
+    else:
+        # this is only necessary to make the test cases consistent
+        co_config["services"].sort(key=lambda x:x["servicename"])
+
     co_config_modified = {
         "services": co_config["services"],
         "runexp": app_config["runexp"],
