@@ -1,0 +1,67 @@
+runexp:
+  noise: 1e-5
+  numIter: 100
+  initialDesign: 10
+  saveFolder: /my/path/to/reports/
+  confFolder: /my/path/to/config/
+  summaryFolder: /somewhere/in/summary/
+  blueprint: blueprint.yaml
+  sleep_time: 10000
+  metricPoll: 1000
+  expTime: 300000
+application:
+  jar_file: storm-starter-1.0.1.jar
+  jar_path: URL
+  class: storm.starter.WordCountTopology
+  name: wordcount
+  type: storm
+services:
+  - servicename: deployment.service
+    URL: http://deployer.region1.lan:8000
+    container: aaa1212a-9bv3d4483-a120-334441115341 
+    username: user
+    password: monkey123
+    tools: /usr/share/deployer/tools
+vars:
+  - paramname: "component.spout_num" 
+    node: ["storm", "nimbus"] 
+    options: [1 3]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "topology.max.spout.pending" 
+    node: ["storm", "nimbus"] 
+    options: [1 2 10 100 1000 10000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "topology.sleep.spout.wait.strategy.time.ms"
+    node: ["storm", "nimbus"]  
+    options: [1 2 3 10 100]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "component.split_bolt_num"
+    node: ["storm", "nimbus"]  
+    options: [1 2 3 6]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "component.count_bolt_num" 
+    node: ["storm", "nimbus"]  
+    options: [1 3 6 12]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "storm.messaging.netty.min_wait_ms"  
+    node: ["storm", "nimbus"] 
+    options: [10 100 1000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1

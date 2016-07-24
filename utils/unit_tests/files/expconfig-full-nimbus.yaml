@@ -1,0 +1,82 @@
+runexp:
+  noise: 1e-5
+  numIter: 100
+  initialDesign: 10
+  saveFolder: ./integrated/reports/
+  confFolder: ./integrated/config/
+  summaryFolder: ./integrated/summary/
+  blueprint: storm-fco.yaml
+  conf: wordcount.yaml
+  topic: jsontest
+  sleep_time: 10000
+  metricPoll: 1000
+  expTime: 300000
+services: # SORTED ALPHABETICALLY by servicename to make the tests work
+  - servicename: broker
+    URL: http://localhost:8082
+  - servicename: deployment.service
+    URL: http://deployer.example.lan:8000
+    container: 7b5750a7-914e-4e83-ab40-b04fd1975542 
+    username: user
+    password: monkey123
+    tools: /Repos/DICE-Deployment-Service/tools
+  - servicename: monitoring.service
+    URL: http://10.10.45.20:5001
+  - servicename: storm_ui
+    URL: http://nimbus.local.lan:8080
+    ip: nimbus.local.lan
+    username: ubuntu
+    password: abc123863
+    storm_client: "/usr/share/storm/0.9.3/"  
+  - servicename: zookeeper.servers
+    URL: localhost:2181
+    ip: ["10.10.50.11"]
+application:
+  jar_file: storm-starter-1.0.1.jar
+  jar_path: URL
+  class: storm.starter.WordCountTopology
+  name: wordcount
+  type: storm
+vars:
+  - paramname: "component.spout_num" 
+    node: ["storm", "nimbus"] 
+    options: [1 3]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "topology.max.spout.pending" 
+    node: ["storm", "nimbus"] 
+    options: [1 2 10 100 1000 10000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "topology.sleep.spout.wait.strategy.time.ms"
+    node: ["storm", "nimbus"]  
+    options: [1 2 3 10 100]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "component.split_bolt_num"
+    node: ["storm", "nimbus"]  
+    options: [1 2 3 6]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "component.count_bolt_num" 
+    node: ["storm", "nimbus"]  
+    options: [1 3 6 12]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
+  - paramname: "storm.messaging.netty.min_wait_ms"  
+    node: ["storm", "nimbus"] 
+    options: [10 100 1000]
+    lowerbound: 0
+    upperbound: 0
+    integer: 0
+    categorical: 1
