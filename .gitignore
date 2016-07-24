@@ -6,3 +6,4 @@ temp
 bin
 bin.zip
 release_history
+*.pyc
