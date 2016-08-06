@@ -122,7 +122,7 @@ $ mkdir -p ~/myrepos ; cd ~/myrepos
 $ git clone https://github.com/dice-project/DICE-Deployment-Service.git
 ```
 
-Moreover, the DICE deployment service needs to be running soemwhere (see the [guideline](https://github.com/dice-project/DICE-Deployment-Service/blob/master/doc/AdminGuide.md)) and the associated filed in `expconfig.yaml` needs to be updated accordingly:
+Moreover, the DICE deployment service needs to be running somewhere (see the [guideline](https://github.com/dice-project/DICE-Deployment-Service/blob/master/doc/AdminGuide.md)) and the associated filed in `expconfig.yaml` needs to be updated accordingly:
 
 ```yaml
 services:    
@@ -206,7 +206,7 @@ True minimum value: -0.636816 at:
 * [Paper](https://arxiv.org/pdf/1606.06543v1) is the key paper about BO4CO. 
 * [Wiki](https://github.com/dice-project/DICE-Configuration-BO4CO/wiki) provides more details about the tool and setting up the environment.
 * [Data](https://zenodo.org/record/56238) is the experimental datasets.
-* [Presentation](http://www.slideshare.net/pooyanjamshidi/transfer-learning-for-optimal-configuration-of-big-data-software) is a presentation about the tool and our experimental results.
+* [Presentation](http://www.slideshare.net/pooyanjamshidi/an-uncertaintyaware-approach-to-optimal-configuration-of-stream-processing-systems) is a presentation about the tool and our experimental results.
 * [Gitxiv](http://gitxiv.com/posts/5XkMY4C3hXScwZ3Tw/an-uncertainty-aware-approach-to-optimal-configuration-of) is all research materials about the tool in one link.
 * [TL4CO](https://github.com/dice-project/DICE-Configuration-TL4CO) is the DevOps enabled configuration optimization tool.
 
@@ -218,7 +218,10 @@ P. Jamshidi, G. Casale, "An Uncertainty-Aware Approach to Optimal Configuration 
 
 ## Contact
 
-If you notice a bug, want to request a feature, or have a question or feedback, please send an email to pooyan.jamshidi@gmail.com. We would like to hear from people using our code.
+If you notice a bug, want to request a feature, or have a question or feedback, please send an email to the tool maintainer:
+
+[Pooyan Jamshidi](https://github.com/pooyanjamshidi), Imperial College London, pooyan.jamshidi@gmail.com
+
 
 ## Licence
 
