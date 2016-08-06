@@ -11,8 +11,80 @@ The following figure illustrates components of BO4CO:
 
 ![BO4CO architecture](doc/appendix/figures/bo4co-arch.png)
 
+## Automated installation with Chef
 
-## Usage
+We provide an automated installation of the BO4CO via a Chef cookbook.
+
+In a dedicated Ubuntu 14.04 host, first install the
+[Chef Development Kit](https://downloads.chef.io/chef-dk/), e.g.:
+
+```bash
+$ wget https://packages.chef.io/stable/ubuntu/12.04/chefdk_0.15.16-1_amd64.deb
+$ sudo dpkg -i chefdk_0.15.16-1_amd64.deb
+```
+
+Then obtain this cookbook repository:
+
+```bash
+$ git clone https://github.com/dice-project/DICE-Chef-Repository.git
+$ cd DICE-Chef-Repository
+```
+
+Before we run the installation, we just need to provide the configuration,
+pointing to the external services that the Configuration Optimization relies
+on. We provide this configuration in a `json` file. Let us name it
+`configuration-optimization.json`:
+
+```json
+{
+  "dice-h2020": {
+    "conf-optim": {
+      "ds-container": "4a7459f7-914e-4e83-ab40-b04fd1975542"
+    },
+    "deployment-service": {
+      "url": "http://10.10.50.3:8000",
+      "username": "admin",
+      "password": "LetJustMeIn"
+    },
+    "d-mon": {
+      "url": "http://10.10.50.20:5001"
+    }
+  }
+}
+```
+
+Here, the parameters represent:
+* `ds-container` is the UUID of the
+  [DICE deployment service](https://github.com/dice-project/DICE-Deployment-Service)
+  container dedicated to the application to run and optimize,
+* `deployment-service` contain the access point and credentials of the DICE
+  Deployment Service to be used by the CO,
+* `d-mon` contains parameters used by the CO to connect to the DICE monitoring
+  framework.
+
+Now we can start the Chef process:
+
+```bash
+$ sudo chef-client -z \
+    -o recipe[apt::default],recipe[java::default],recipe[dice-h2020::deployment-service-tool],recipe[dice-h2020::conf-optim],recipe[storm-cluster::common] \
+    -j configuration-optimization.json
+```
+
+When the execution succeeds, the Configuration Optimization will be installed
+in `/opt/co/` by default. The command will also install the Storm client
+(thanks to the `recipe[storm-cluster::common]` provided at the end of the
+runlist above).
+
+**Notes about tool configuration:** the Chef recipe creates three configuration
+files in the `/opt/co/conf` folder. The `config.yaml` contains the parameters
+transferred from the `configuration-optimization.json` listed above. The
+`app-config.yaml` is an example experiment declaration file like it should
+be supplied with the application. The `expconfig.yaml` is an assembled
+configuration file as defined [later in the document](#tool-configuration) and
+will be the one used by the BO4CO. The recipe employs
+[configuration merge tool](utils/README.md) to create the `expconfig.yaml`.
+
+## Manual installation
 
 The configuration tool works in `deployed` and `MATLAB` mode. The `deployed` mode does not need any MATLAB installation and only is dependent on a royalty free [MATLAB Runtime (MCR)](http://uk.mathworks.com/products/compiler/mcr/). 
 
