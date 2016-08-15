@@ -1,5 +1,5 @@
 function init()
-global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint application storm_ui zookeeper
+global exp_name domain options topology config_template config_folder save_folder deployment_service ci_service mon_service exp_budget initial_design polling_time exp_time sleep_time storm summary_folder kafka topic blueprint application storm_ui zookeeper hadoop replication
 config % global parameters initialized
 
 % read configuration parameters
@@ -29,6 +29,7 @@ if ~isdeployed
     sleep_time=runConfig.sleep_time;
     topic=runConfig.topic;
     blueprint=runConfig.blueprint;
+    replication=runConfig.replication;
     
     options=params.param_options;
     domain=options2domain(options);
@@ -40,9 +41,10 @@ if ~isdeployed
     storm_ui=services{1,4};
     kafka=services{1,5}.URL;
     zookeeper=services{1,6};
+    hadoop=services{1,7};
 else
     setmcruserdata('application',application_detail);
-
+    
     setmcruserdata('topology',application_detail.name);
     setmcruserdata('exp_name',strcat(application_detail.name,'_exp_',num2str(datenum(datetime('now')),'%bu')));
     
@@ -57,7 +59,8 @@ else
     setmcruserdata('sleep_time',runConfig.sleep_time);
     setmcruserdata('topic',runConfig.topic);
     setmcruserdata('blueprint',runConfig.blueprint);
-    
+    setmcruserdata('replication',runConfig.replication);
+
     setmcruserdata('options',params.param_options);
     setmcruserdata('domain',options2domain(params.param_options));
     
@@ -67,7 +70,8 @@ else
     setmcruserdata('storm',services{1,4}.URL);
     setmcruserdata('storm_ui',services{1,4});
     setmcruserdata('kafka',services{1,5}.URL);
-    setmcruserdata('zookeeper',services{1,6}); 
+    setmcruserdata('zookeeper',services{1,6});
+    setmcruserdata('hadoop',services{1,7});
 end
 
 % setup the python path (for deployment service)
