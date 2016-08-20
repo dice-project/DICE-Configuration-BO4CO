@@ -12,6 +12,7 @@ runexp:
   sleep_time: 10000
   metricPoll: 1000
   expTime: 300000
+  replication: 5 # for batch applications, e.g., mapreduce jobs, the number of repeated deployment and measurements 
 # the url of the services confioguration optimization is depend on or use
 services:
   - servicename: "deployment.service"
@@ -35,12 +36,18 @@ services:
   - servicename: "zookeeper.servers"
     URL: "URL" # kafka 
     ip: ["IP"]
+ - servicename: "hadoop"
+    URL: "URL"
+    ip: "IP"
+    username: "USERNAME"
+    password: "PASSWORD"  
+    storm_client: "/usr/local/hadoop/"     
 application:
   jar_file: "storm-starter-0.9.3.jar"
   jar_path: URL # this is a URL from which the jar file will be submited, you can put the prepared jar file into dropbox and use the dropbox link here
   class: "storm.starter.WordCountTopology"
   name: "wordcount"
-  type: "storm"
+  type: "storm" # hadoop spark cassandra
 # information about the parameters, note that for each parameter the specific technology
 # , e.g., storm, is also specified via "node"
 vars:
