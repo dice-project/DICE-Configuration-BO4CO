@@ -25,7 +25,7 @@ switch application_.type
         response_1=latency;
         response_2=throughput;
     case 'hadoop'
-        [job_completion_time]=f_hadoop(x);
+        [job_completion_time]=f_hadoop(setting);
         response_1=job_completion_time;
         response_2=-1; % throughput is not applicable for batch applications
 end

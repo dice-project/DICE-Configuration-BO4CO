@@ -24,9 +24,10 @@ ssh2_conn = ssh2_close(ssh2_conn); %will call ssh2.m and run command and then cl
 movefile([save_folder_ 'data.csv'],[save_folder_ expdata_csv_name]);
 
 summary=[];
-
 filename=[save_folder_ expdata_csv_name];
-thiscsv=csvread(filename,firstrow,0);
+firstrow = 1;
+firstcol = number_of_cols(filename)-1;
+thiscsv=csvread(filename,firstrow,firstcol);
 
 % if instead of mean percentile required replace it with prctile(X,p)
 if ~isempty(thiscsv)

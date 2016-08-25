@@ -1,4 +1,4 @@
-function [status]=deploy_hadoop_mapreduce_job(setting)
+function deploy_hadoop_mapreduce_job(setting)
 % Submit a mapreduce job with a specific configuration setting.
 
 % Authors: Pooyan Jamshidi (pooyan.jamshidi@gmail.com)
@@ -22,9 +22,9 @@ end
 extrastr = ' ';
 
 % clean hdfs for the job
-if strcmp(status,'deployed')
-    undeploy_storm_topology(deployment_id);
-end
+% if strcmp(status,'deployed')
+%     undeploy_storm_topology(deployment_id);
+% end
 
 % prepare the connection
 ssh2_conn = ssh2_config(hadoop_.ip,hadoop_.username,hadoop_.password);
@@ -45,11 +45,12 @@ end
 % added to the path
 config_str='';
 for i=1:length(options_)
-    config_str=[config_str extrastr options_{1,i} '=' num2str(setting(i)) ';'];
+    config_str=[config_str options_{1,i} '=' num2str(setting(i)) ';'];
 end
+config_str=config_str(1:end-1); % taking out the last ;
 
-cli='java -jar CommandLineTool.jar';
-cmd=[cli extrastr '-jar' extrastr application_.jar_file extrastr '-params' extrastr config_str extrastr '-class' extrastr application_.class extrastr '-args' extrastr application_.args extrastr '-applicationReplication' extrastr replication_];
+cli=['java -jar' extrastr application_.cli_file];
+cmd=[cli extrastr '-jar' extrastr application_.jar_file extrastr '-params' extrastr '"' config_str '"' extrastr '-class' extrastr application_.class extrastr '-args' extrastr application_.args extrastr '-applicationReplication' extrastr int2str(replication_)];
 [ssh2_conn, response] = ssh2_command(ssh2_conn,cmd);
 
 ssh2_conn = ssh2_close(ssh2_conn); %will call ssh2.m and run command and then close connection
