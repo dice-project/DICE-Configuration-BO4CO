@@ -17,12 +17,12 @@ else
     application_=getmcruserdata('application');
 end
 
-% try
-%     % deploy the job under a specific setting
-%     deploy_hadoop_mapreduce_job(setting);
-% catch ME
-%     warning(ME.message);
-% end
+try
+    % deploy the job under a specific setting
+    deploy_hadoop_mapreduce_job(setting);
+catch ME
+    warning(ME.message);
+end
 expdata_csv_name=strcat(application_.name,'_metrics_',num2str(datenum(datetime('now')),'%bu'),'.csv');
 
 if ~isempty(expdata_csv_name)
