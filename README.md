@@ -292,8 +292,7 @@ P. Jamshidi, G. Casale, "An Uncertainty-Aware Approach to Optimal Configuration 
 
 If you notice a bug, want to request a feature, or have a question or feedback, please send an email to the tool maintainer:
 
-[Pooyan Jamshidi](https://github.com/pooyanjamshidi), Imperial College London, pooyan.jamshidi@gmail.com
-
+[Pooyan Jamshidi](https://github.com/pooyanjamshidi), pooyan.jamshidi@gmail.com
 
 ## Licence
 
