@@ -36,7 +36,7 @@ services:
   - servicename: "zookeeper.servers"
     URL: "URL" # kafka 
     ip: ["IP"]
- - servicename: "hadoop"
+  - servicename: "hadoop"
     URL: "URL"
     ip: "IP"
     username: "USERNAME"
